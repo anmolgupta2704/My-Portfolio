@@ -13,23 +13,16 @@ body{
     overflow-x: hidden;
 }
 
-header{
-    z-index: 889;
-    position: fixed;
-    background-color: rgba(255, 255, 255, 0.1);
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px 200px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: 0.2s ease;
+header {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-header.sticky{
-    background-color: #3238e7;
-    padding: 10px 200px;
+header.sticky {
+  background: rgba(50, 56, 231, 0.95);
+  backdrop-filter: blur(5px);
 }
 
 header .brand{
