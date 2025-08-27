@@ -1,302 +1,851 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anmol Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+  <title>Anmol Portfolio </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+  />
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <style>
+    :root{
+      --bg:#0a0f1f;
+      --bg-soft:#0f1730;
+      --glass:rgba(255,255,255,.06);
+      --card:rgba(255,255,255,.08);
+      --text:#e8ecff;
+      --muted:#a9b3d6;
+      --brand:#5b8cff;
+      --brand-2:#9a6bff;
+      --accent:#ffb24d;
+      --success:#3ce0a0;
+      --shadow:0 12px 40px rgba(0,0,0,.35);
+      --radius:18px;
+      --blur:10px;
+      --speed:650ms;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);scroll-behavior:smooth}
+    img{max-width:100%;display:block}
+
+    /* ---------- Global containers ---------- */
+    section{padding:96px 22px}
+    .container{max-width:1180px;margin:0 auto}
+
+    /* ---------- Fancy gradient noise bg ---------- */
+    body::before{
+      content:"";
+      position:fixed;inset:0;z-index:-2;
+      background:
+        radial-gradient(60vmax 60vmax at 10% 10%, rgba(91,140,255,.14), transparent 60%),
+        radial-gradient(60vmax 60vmax at 90% 10%, rgba(154,107,255,.16), transparent 60%),
+        radial-gradient(70vmax 70vmax at 50% 110%, rgba(255,178,77,.10), transparent 60%),
+        linear-gradient(#080c1a,#0a0f1f 45%,#0b1329);
+      pointer-events:none;
+    }
+    body::after{
+      content:"";
+      position:fixed;inset:-40% -40% auto auto;height:160%;width:160%;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='white' stroke-opacity='.04'%3E%3Cpath d='M0 110h220M110 0v220'/%3E%3C/g%3E%3C/svg%3E");
+      filter:contrast(120%) brightness(120%) blur(0.4px);opacity:.35;z-index:-1;pointer-events:none;
+      animation:slowPan 45s linear infinite;
+      transform:rotate(2deg);
+    }
+    @keyframes slowPan{0%{transform:translate3d(0,0,0) rotate(2deg)}100%{transform:translate3d(-10%, -10%,0) rotate(2deg)}}
+
+    /* ---------- Header / Navbar ---------- */
+    header{
+      position:fixed;inset:0 0 auto 0;z-index:999;
+      backdrop-filter: blur(var(--blur));
+      background: linear-gradient(180deg, rgba(14,20,40,.75), rgba(14,20,40,.25));
+      border-bottom:1px solid rgba(255,255,255,.08);
+      transition: background .3s ease, transform .5s ease, box-shadow .3s ease;
+    }
+    header.sticky{
+      background:rgba(14,20,40,.9);
+      box-shadow: var(--shadow);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 22px;max-width:1180px;margin:0 auto;
+    }
+    .brand{
+      text-decoration:none;color:#fff;font-weight:800;letter-spacing:.5px;
+      font-size:1.2rem;display:inline-flex;align-items:center;gap:.6rem;
+    }
+    .brand::before{
+      content:"";width:10px;height:10px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, #7aa4ff 35%, transparent 70%);
+      box-shadow:0 0 18px #6ea0ff,0 0 36px #9a6bff;
+      animation:pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+
+    .navigation{display:flex;gap:22px;align-items:center}
+    .navigation a{
+      color:var(--muted);text-decoration:none;font-weight:500;font-size:.98rem;
+      padding:10px 14px;border-radius:12px;transition:color .25s, background .25s, transform .25s;
+    }
+    .navigation a:hover{color:#fff;background:rgba(255,255,255,.06);transform:translateY(-2px)}
+    .menu-btn{display:none;width:40px;height:40px;cursor:pointer;background:url('Image/menu.png') center/26px no-repeat;filter:invert(1);opacity:.8}
+
+    /* ---------- Hero ---------- */
+    .main{min-height:100vh;display:grid;place-items:center;padding-top:120px}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+    .kicker{color:var(--success);font-weight:600;letter-spacing:.2em;text-transform:uppercase;font-size:.8rem;margin-bottom:10px;opacity:.9}
+    .hero h1{
+      font-size:clamp(2rem, 2.6rem + 1vw, 3.4rem);
+      line-height:1.05;margin:.2rem 0 .8rem;
+      background:linear-gradient(90deg, #fff 10%, #9fc2ff 35%, #d3b2ff 65%, #ffd199 90%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      animation:shine 6s linear infinite;
+      background-size:200% auto;
+    }
+    @keyframes shine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+
+    .animated-text{
+      position:relative;height:58px;overflow:hidden;margin:10px 0 18px;
+    }
+    .animated-text h3{
+      font-size:clamp(1.2rem, 1rem + .9vw, 2rem);
+      font-weight:700;line-height:58px;letter-spacing:.5px;
+      color:#c5d6ff;
+      text-shadow:0 6px 30px rgba(91,140,255,.28);
+    }
+    .animated-text h3:nth-child(1){animation:text-move 7s ease-in-out infinite}
+    @keyframes text-move{
+      0%,15%{margin-top:0}
+      25%,45%{margin-top:-58px}
+      55%,75%{margin-top:-116px}
+      85%,100%{margin-top:-58px}
+    }
+
+    .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}
+    .btn{
+      --bgBtn: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color:#fff;background:var(--bgBtn);border:none;border-radius:14px;
+      padding:12px 18px;font-weight:700;letter-spacing:.4px;text-decoration:none;
+      box-shadow:0 10px 30px rgba(91,140,255,.35);transition:transform .25s, box-shadow .25s, filter .25s;
+      display:inline-flex;align-items:center;gap:10px
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(91,140,255,.45)}
+    .btn.secondary{
+      background:transparent;border:1px solid rgba(255,255,255,.16);color:#dfe6ff;
+      box-shadow:none
+    }
+    .btn.secondary:hover{background:rgba(255,255,255,.06)}
+
+    .media-icons{display:flex;gap:18px;margin-top:26px}
+    .media-icons a{color:#dfe6ff;font-size:22px;opacity:.9;transition:transform .25s, color .25s}
+    .media-icons a:hover{transform:translateY(-3px) scale(1.05);color:#fff}
+     
+
+    .cursor {
+  display: inline-block;
+  background: transparent;
+  color: #3a6cf4;
+  font-weight: bold;
+  margin-left: 2px;
+  animation: blink 0.8s infinite;
+    }
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+    /* Profile polygon frame */
+    .profile-wrap{
+      position:relative;display:grid;place-items:center;
+      isolation:isolate;
+    }
+    .neon-hex{
+      width:min(360px, 80vw);height:min(420px, 88vw);
+      background:linear-gradient(180deg, rgba(91,140,255,.18), rgba(154,107,255,.18));
+      clip-path:polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:
+        inset 0 0 40px rgba(91,140,255,.18),
+        0 0 0 6px rgba(91,140,255,.06),
+        0 18px 60px rgba(0,0,0,.35);
+      display:grid;place-items:center;
+      backdrop-filter:blur(6px);
+      position:relative;overflow:hidden;
+      animation:float 6s ease-in-out infinite;
+    }
+    .neon-hex::before{
+      content:"";position:absolute;inset:-40% -40% auto auto;height:200%;width:200%;
+      background:conic-gradient(from 180deg, rgba(91,140,255,.12), rgba(154,107,255,.12), transparent 30%);
+      animation:spin 18s linear infinite;mix-blend:screen;opacity:.7;
+    }
+    .neon-hex img{
+      width:88%;height:88%;object-fit:cover;border-radius:22px;
+      box-shadow:0 12px 40px rgba(0,0,0,.35)
+    }
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ---------- Section Titles ---------- */
+    .section-title{
+      text-align:center;margin-bottom:48px;
+    }
+    .section-title h2{
+      font-size:clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+      font-weight:800;letter-spacing:.4px;margin:0 0 10px;
+      background:linear-gradient(90deg, #fff, #ffd199);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .section-title .bar{
+      width:140px;height:4px;margin:0 auto;border-radius:999px;
+      background:linear-gradient(90deg, var(--accent), transparent);
+      position:relative;overflow:hidden;
+    }
+    .section-title .bar::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(90deg, transparent, #fff, transparent);
+      transform:translateX(-100%);animation:glide 2.6s ease-in-out infinite;
+    }
+    @keyframes glide{50%{transform:translateX(100%)}100%{transform:translateX(100%)}}
+
+    /* ---------- About ---------- */
+    .about{
+      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent);
+    }
+    .about-grid{
+      display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center
+    }
+    .about .img-card{
+      position:relative;border-radius:22px;padding:16px;
+      background:var(--card);backdrop-filter:blur(8px);box-shadow:var(--shadow)
+    }
+    .about .img-card img{
+      border-radius:18px;aspect-ratio:1/1;object-fit:cover;
+      filter:saturate(1.02) contrast(1.02)
+    }
+    .about .content-title{font-size:1.6rem;font-weight:800;margin:6px 0 12px}
+    .about .paragraph-text{color:var(--muted);line-height:1.8}
+
+    /* ---------- Skills ---------- */
+    .skills{position:relative}
+    .skills .wrap{
+      display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start
+    }
+    .skills .lead{color:var(--muted)}
+    .bar{margin-bottom:16px}
+    .bar .info{display:flex;justify-content:space-between;margin-bottom:8px}
+    .bar .info span{font-weight:600}
+    .bar .line{
+      height:14px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;position:relative
+    }
+    .bar .line::before{
+      content:"";position:absolute;inset:0 auto 0 0;width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--brand), var(--brand-2));
+      box-shadow:0 6px 24px rgba(91,140,255,.45);
+      transition:width 1.2s ease .2s;
+    }
+   
+     
+
+
+
+/* DSA */
+.line.dsa {
+  width: 90%;
+  height: 8px;
+  background: #007bff; /* Blue */
+  border-radius: 4px;
+  animation: fillDSA 2s ease forwards;
+}
+@keyframes fillDSA {
+  from { width: 0; }
+  to { width: 90%; }
+}
+
+/* Python */
+.line.python {
+  width: 85%;
+  height: 8px;
+  background: #ffcc00; /* Yellow */
+  border-radius: 4px;
+  animation: fillPython 2s ease forwards;
+}
+@keyframes fillPython {
+  from { width: 0; }
+  to { width: 85%; }
+}
+
+/* Django */
+.line.django {
+  width: 80%;
+  height: 8px;
+  background: #28a745; /* Green */
+  border-radius: 4px;
+  animation: fillDjango 2s ease forwards;
+}
+@keyframes fillDjango {
+  from { width: 0; }
+  to { width: 80%; }
+}
+
+/* SQL */
+.line.sql {
+  width: 75%;
+  height: 8px;
+  background: #6610f2; /* Purple */
+  border-radius: 4px;
+  animation: fillSQL 2s ease forwards;
+}
+@keyframes fillSQL {
+  from { width: 0; }
+  to { width: 75%; }
+}
+
+/* Web Development */
+.line.web {
+  width: 70%;
+  height: 8px;
+  background: #17a2b8; /* Cyan */
+  border-radius: 4px;
+  animation: fillWeb 2s ease forwards;
+}
+@keyframes fillWeb {
+  from { width: 0; }
+  to { width: 70%; }
+}
+
+/* Cybersecurity */
+.line.security {
+  width: 60%;
+  height: 8px;
+  background: #dc3545; /* Red */
+  border-radius: 4px;
+  animation: fillSecurity 2s ease forwards;
+}
+@keyframes fillSecurity {
+  from { width: 0; }
+  to { width: 60%; }
+}
+
+    /* ---------- Certification Cards ---------- */
+    .certification .content{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px
+    }
+    .card{
+      background:var(--card);border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;padding:22px;
+      box-shadow:var(--shadow);
+      transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s;
+      backdrop-filter:blur(8px);
+    }
+    .card:hover{
+      transform:translateY(-8px) scale(1.01);
+      border-color:rgba(255,255,255,.18);
+      box-shadow:0 16px 60px rgba(91,140,255,.25), 0 6px 18px rgba(0,0,0,.35);
+    }
+    .certificate-image{
+      border-radius:12px;overflow:hidden;margin-bottom:12px
+    }
+    .service-icon{
+      font-size:42px;color:var(--brand);margin:6px 0 10px
+    }
+    .card .info h3{margin:.2rem 0 .2rem;font-weight:800}
+    .card .info p{color:var(--muted);line-height:1.7}
+
+    /* ---------- Contact ---------- */
+    .contact .cards{
+      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px; margin-bottom:26px
+    }
+    .contact .card{
+      text-align:center
+    }
+    .contact .contact-icon{
+      font-size:44px;color:var(--brand);transition:transform .35s
+    }
+    .contact .card:hover .contact-icon{transform:translateY(-6px)}
+    .contact .card .info h3{margin:10px 0 4px}
+    .contact .card .info span{color:var(--muted)}
+    .contact-form{
+      max-width:660px;margin:0 auto;background:var(--card);
+      border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:28px 24px;box-shadow:var(--shadow)
+    }
+    .contact-form h3{text-align:center;margin-top:0}
+    .input-box{margin:12px 0}
+    .input-box input,.input-box textarea{
+      width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+      color:#fff;padding:12px 14px;border-radius:12px;outline:none;
+      transition:border-color .25s, background .25s; font:inherit
+    }
+    .input-box input:focus,.input-box textarea:focus{border-color:var(--brand);background:rgba(255,255,255,.09)}
+    .send-btn{
+      width:100%;margin-top:8px
+    }
+    .contact .info a {
+  color: #fff;                /* White text (tum apne theme ke hisaab se badal sakte ho) */
+  text-decoration: none;      /* No underline */
+  font-weight: 500;           /* Slightly bold */
+  transition: 0.3s;           /* Smooth effect */
+}
+
+.contact .info a:hover {
+  color: #00bcd4;             /* Hover pe cyan/blue color */
+  text-decoration: underline; /* Underline on hover */
+}
+
+    /* ---------- Footer ---------- */
+    .footer{
+      background:#050813;border-top:1px solid rgba(255,255,255,.08);
+      text-align:center;padding:34px 22px;color:#cbd6ff
+    }
+    .footer a{color:#fff;text-decoration:none}
+
+    /* ---------- Scroll to Top ---------- */
+    .scrollToTop-btn{
+      position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:12px;
+      display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;
+      background:linear-gradient(140deg, var(--brand), var(--brand-2));
+      color:#fff;box-shadow:0 12px 30px rgba(91,140,255,.45);
+      transition:opacity .25s ease, transform .25s ease;
+      z-index:998;
+    }
+    .scrollToTop-btn.active{opacity:1;pointer-events:auto;transform:translateY(-4px)}
+    .scrollToTop-btn:hover{transform:translateY(-6px)}
+
+    /* ---------- Utilities & Responsive ---------- */
+    .reveal,[data-animate]{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.show,[data-animate].show{opacity:1;transform:none}
+
+    @media (max-width:1040px){
+      .navigation{display:none}
+      .menu-btn{display:block}
+      .navigation.active{
+        position:fixed;inset:0 0 0 auto;width:min(86vw,380px);
+        background:#0b1329;border-left:1px solid rgba(255,255,255,.08);
+        display:flex;flex-direction:column;gap:8px;padding:90px 22px 22px;
+        animation:slideIn .35s ease forwards;
+      }
+      @keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+      .navigation a{color:#e6ebff;background:rgba(255,255,255,.04)}
+      .menu-btn.active{background:url('Image/close.png') center/22px no-repeat}
+
+      .hero{grid-template-columns:1fr;gap:30px}
+      .about-grid{grid-template-columns:1fr}
+      .skills .wrap{grid-template-columns:1fr}
+      .certification .content{grid-template-columns:1fr}
+      .contact .cards{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:560px){
+      .contact .cards{grid-template-columns:1fr}
+    }
+   
+    /* Default desktop view */
+.about-grid, .skills .wrap, .contact .cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .about-grid, .skills .wrap, .contact .cards {
+    grid-template-columns: 1fr; /* mobile pe ek column me sab aa jayega */
+    text-align: center;
+  }
+
+  .img-card img {
+    width: 200px;
+    margin: auto;
+  }
+}
+
+  </style>
 </head>
 <body>
 
+  <!-- Header -->
+  <header id="top">
+    <nav class="nav">
+      <a href="#" class="brand">Portfolio</a>
+      <div class="menu-btn" aria-label="Open Menu"></div>
+      <div class="navigation">
+        <a href="#main">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#certification">Certification</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
 
-    <header>
-        <a href="" class="brand" data-aos="zoom-in" data-aos-duration="1000">Portfolio</a>
-        <div class="menu-btn"></div>
-        <div class="navigation">
-            <a href="#main" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">Home</a>
-            <a href="#about"data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">About</a>
-            <a href="#skills" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">Skills</a>
-            <a href="#certification" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Certification</a>
-            <a href="#contact" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="500">Contact</a>
-            
-        </div>
-    </header>
-
-    <section class="main" id="main">
-  <div class="content">
+<!-- Hero -->
+<section class="main" id="main">
+  <div class="container hero">
     <div class="left">
-      <h2 data-aos="fade-right" data-aos-duration="1000" data-aos-delay="800">
-        Hello, I'm <br><span>Anmol Gupta</span>
-      </h2>
+      <div class="kicker" data-aos="fade-right" data-aos-duration="900">Hello, I'm</div>
+      <h1 data-aos="fade-right" data-aos-duration="900" data-aos-delay="100">
+        Anmol Gupta
+      </h1>
 
-      <div class="animated-text" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="900">
-        <h3>Web Developer</h3>
-        <h3>Problem Solver</h3>
-        <h3>Ethical Hacker</h3>
+      <div class="content">
+        <!-- ✅ Removed duplicate "Hello, I'm Anmol Gupta" -->
+        <h4><span id="typing"></span><span class="cursor">|</span></h4>
+        <p> Aspiring <b>SDE</b> with strong <b>DSA</b> foundation.  
+          Passionate about <b>Cybersecurity</b>, and skilled in  
+          <b>Python</b>, <b>Django</b>, <b>SQL</b>, and modern development tools.</p>
+        <a href="#about" class="btn">About Me</a>
       </div>
 
-      <a href="d:\Users\anmol\Desktop\resume\ats.pdf" download class="btn" data-aos="zoom-out" data-aos-duration="1000" data-aos-delay="1000">See My Resume</a>
+      <div class="cta-row" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="250">
+        <a href="d:/Users/anmol/Desktop/resume/ats.pdf" class="btn">
+          <i class="fas fa-file-download"></i> See My Resume
+        </a>
+        <a href="#contact" class="btn secondary"><i class="fas fa-paper-plane"></i> Hire Me</a>
+      </div>
 
-      <div class="media-icons">
-        <a href="#" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="1200"><i class="fab fa-youtube"></i></a>
-        <a href="#" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="1300"><i class="fab fa-instagram"></i></a>
-        <a href="#" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="1400"><i class="fab fa-twitter"></i></a>
-        <a href="#" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="1500"><i class="fab fa-github"></i></a>
+      <div class="media-icons" data-aos="fade-in" data-aos-duration="900" data-aos-delay="350">
+        <a href="https://leetcode.com/u/2301641720021_A/" target="_blank">
+  <img src="Image/download.png" alt="LeetCode" style="width:24px; height:24px;">
+</a>
+
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/anmol-gupta-714933308"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/anmolgupta2704"><i class="fab fa-github"></i></a>
       </div>
     </div>
 
-    <!-- ✅ Right Side Profile Pic -->
-    <div class="right" data-aos="zoom-in" data-aos-duration="2000" data-aos-delay="700">
-      <div class="profile-pic">
-        <img src="Image/img1.png" alt="Anmol Gupta">
+    <div class="right" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="100">
+      <div class="profile-wrap">
+        <div class="neon-hex">
+          <img src="Image/img1.png" alt="Anmol Gupta">
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 
-<!--  About Section -->
-
-    <section class="about" id="about">
-        <div class="title reveal">
-            <h2 class="section-title" data-aos="fade-up" data-aos-duration="1000">About me</h2>
-        </div>
-        <div class="content">
-            <div class="column col-left reveal">
-                <div class="img-card" data-aos="fade-right" data-aos-duration="2000" data-aos-delay="200">
-                    <img src="Image/img1.png" alt="">
-                </div>
-            </div>
-            <div class="column col-right reveal">
-                <h2 class="content-title" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">Hey There! I am Anmol Gupta</h2>
-                <p class="paragraph-text" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="400">I'm a passionate developer with a strong interest in ethical hacking and cybersecurity. I constantly strive to learn new technologies and enhance my problem-solving skills to build secure, innovative, and impactful projects</p>
-                <a href="#" class="btn" data-aos="zoom-out-left" data-aos-duration="1000" data-aos-delay="600">See more</a>
-            </div>
-        </div>
-    </section>
-
-<!-- Skill Section -->
-
-    <section class="skills" id="skills">
-        <div class="title">
-            <h2 class="section-title" data-aos="fade-up" data-aos-duration="1000">My Skills</h2>
-        </div>
-        <div class="content">
-            <div class="column col-left">
-                <h2 class="content-title" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">My Skills and Experiences</h2>
-                <div class="paragraph-text" data-aos="flip-down" data-aos-duration="1000" data-aos-delay="300">I develop functional and responsive websites using HTML, CSS, and JavaScript. I enjoy creating clean UI designs and continuously improving my coding skills to build better web experiences</div>
-                <a href="#" class="btn" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="400">See more</a>
-            </div>
-            <div class="column col-right">
-                <div class="bar">
-                    <div class="info" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="100">
-                        <span>HTML</span>
-                        <span>95%</span>
-                    </div>
-                    <div class="line html" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="140"></div>
-                </div>
-                <div class="bar">
-                    <div class="info" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="200">
-                        <span>CSS</span>
-                        <span>90%</span>
-                    </div>
-                    <div class="line css" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="240"></div>
-                </div>
-                <div class="bar">
-                    <div class="info" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="300">
-                        <span>Javascript</span>
-                        <span>50%</span>
-                    </div>
-                    <div class="line javascript" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="340"></div>
-                </div>
-                <div class="bar">
-                    <div class="info" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="400">
-                        <span>Python</span>
-                        <span>85%</span>
-                    </div>
-                    <div class="line python" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="440"></div>
-                </div>
-                <div class="bar">
-                    <div class="info" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="500">
-                        <span>Ethical hacking</span>
-                        <span>30%</span>
-                    </div>
-                    <div class="line php" data-aos="zoom-in-right" data-aos-duration="1000" data-aos-delay="540"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-<!-- certification Section -->
-<section class="certification" id="certification">
-  <div class="title">
-    <h2 class="section-title" data-aos="fade-up" data-aos-duration="1000">My Certificates</h2>
-    <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-      Below are some of the certifications I've earned over the course of my learning journey.
-    </p>
-  </div>
-  <div class="content">
-    <!-- Python Certificate -->
-    <div class="card" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="300">
-      <div class="certificate-image">
-        <img src="Image/python.png" alt="Python Certificate" />
-      </div>
-      <div class="service-icon">
-        <i class="fab fa-python"></i>
-      </div>
-      <div class="info">
-        <h3>Python (HackerRank)</h3>
-        <p>Earned Python certification from HackerRank by passing skill assessment tests.</p>
-      </div>
+  <!-- About -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up" data-aos-duration="900">
+      <h2>About Me</h2>
+      <div class="bar"></div>
     </div>
 
-    <!-- Problem Solving Certificate -->
-    <div class="card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-      <div class="certificate-image">
-        <img src="Image/problem solving.png" alt="Problem Solving Certificate" />
+    <div class="about-grid">
+      <!-- Profile Image -->
+      <div class="img-card" data-aos="fade-right" data-aos-duration="1000">
+        <img src="Image/img1.png" alt="Profile">
       </div>
-      <div class="service-icon">
-        <i class="fas fa-brain"></i>
-      </div>
-      <div class="info">
-        <h3>Problem Solving (HackerRank)</h3>
-        <p>Certified in logical and analytical thinking via HackerRank's problem-solving tests.</p>
-      </div>
-    </div>
 
-    <!-- SQL Certificate -->
-    <div class="card" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
-      <div class="certificate-image">
-        <img src="Image/sql.png" alt="SQL Certificate" />
-      </div>
-      <div class="service-icon">
-        <i class="fas fa-database"></i>
-      </div>
-      <div class="info">
-        <h3>DBMS / SQL (HackerRank)</h3>
-        <p>Successfully completed SQL certification test on HackerRank.</p>
+      <!-- About Text -->
+      <div class="col-right" data-aos="fade-left" data-aos-duration="1000">
+        <h3 class="content-title">Hey There! I am Anmol Gupta</h3>
+        <p class="paragraph-text">
+          I’m an aspiring <b>Software Development Engineer (SDE)</b> with a strong foundation in 
+          <b>Data Structures & Algorithms</b> and a deep interest in <b>Cybersecurity</b>.  
+          My focus is on building scalable applications while keeping them secure.
+        </p>
+        <p class="paragraph-text">
+          I work extensively with <b>Python</b>, <b>Django</b>, and <b>SQL</b>, and I’m passionate 
+          about solving problems that require logical thinking and clean architecture.  
+          With every project, I aim to enhance my skills in <b>development + security</b>.
+        </p>
+        <p class="paragraph-text">
+          Outside of coding, I continuously explore new technologies, practice problem-solving, 
+          and challenge myself to stay sharp in both <b>competitive programming</b> 
+          and <b>ethical hacking</b>.
+        </p>
+        <a href="#projects" class="btn" style="margin-top:14px">
+          <i class="fas fa-code"></i> See My Work
+        </a>
       </div>
     </div>
   </div>
 </section>
 
 
+  <!-- Skills -->
+  <section class="skills" id="skills">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up" data-aos-duration="900">
+      <h2>My Skills</h2>
+      <div class="bar"></div>
+    </div>
 
-    <section class="contact" id="contact">
-        <div class="title reveal">
-          <h2 class="section-title">Contact Me</h2>
+    <div class="wrap">
+      <!-- Left Column -->
+      <div class="col-left" data-aos="fade-right" data-aos-duration="900">
+        <h3 class="content-title">My Skills and Experiences</h3>
+        <p class="lead">
+          I specialize in <b>Software Development</b> and <b>Cybersecurity</b>, with a strong focus 
+          on <b>Data Structures & Algorithms</b>.  
+          I enjoy solving complex problems, building secure applications, and developing projects 
+          using <b>Python, Django, and SQL</b>.  
+          My experience also extends to <b>web development</b> and <b>ethical hacking</b>, which 
+          help me create efficient and secure solutions.
+        </p>
+        <a href="#certification" class="btn secondary" style="margin-top:14px">
+          See Certifications
+        </a>
+      </div>
+
+      <!-- Right Column: Skill Bars -->
+      <div class="col-right" data-aos="fade-left" data-aos-duration="900">
+        <div class="bar">
+          <div class="info"><span>Data Structures & Algorithms (DSA)</span><span>90%</span></div>
+          <div class="line dsa"></div>
         </div>
-        <div class="content">
-          <div class="row">
-            <div class="card reveal">
-              <div class="contact-icon">
-                <i class="fas fa-map-marker-alt"></i>
-              </div>
-              <div class="info">
-                <h3>Address</h3>
-                <span>Kanpur,Uttar Pradesh</span>
-              </div>
-            </div>
-            <div class="card reveal">
-              <div class="contact-icon">
-                <i class="fas fa-phone"></i>
-              </div>
-              <div class="info">
-                <h3>Phone</h3>
-                <span>+91 7905842085</span>
-              </div>
-            </div>
-            <div class="card reveal">
-              <div class="contact-icon">
-                <i class="fas fa-envelope"></i>
-              </div>
-              <div class="info">
-                <h3>Email Address</h3>
-                <span>anmolgupta2704@gmail.com</span>
-              </div>
-            </div>
-            <div class="card reveal">
-              <div class="contact-icon">
-                <i class="fas fa-globe"></i>
-              </div>
-              <div class="info">
-                <h3>Website</h3>
-                <span>cyberganj.onrender.com</span>
-              </div>
-            </div>
+        <div class="bar">
+          <div class="info"><span>Python</span><span>85%</span></div>
+          <div class="line python"></div>
+        </div>
+        <div class="bar">
+          <div class="info"><span>Django</span><span>80%</span></div>
+          <div class="line django"></div>
+        </div>
+        <div class="bar">
+          <div class="info"><span>SQL</span><span>75%</span></div>
+          <div class="line sql"></div>
+        </div>
+        <div class="bar">
+          <div class="info"><span>Web Development (HTML, CSS, JS)</span><span>70%</span></div>
+          <div class="line web"></div>
+        </div>
+        <div class="bar">
+          <div class="info"><span>Cybersecurity & Ethical Hacking</span><span>60%</span></div>
+          <div class="line security"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Certification -->
+  <section class="certification" id="certification">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up" data-aos-duration="900">
+        <h2>My Certificates</h2>
+        <div class="bar"></div>
+      </div>
+
+      <p class="container" style="color:var(--muted);max-width:860px;margin:0 auto 26px;text-align:center" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+        Below are some of the certifications I've earned over the course of my learning journey.
+      </p>
+
+      <div class="content">
+        <div class="card" data-aos="fade-right" data-aos-duration="900">
+          <div class="certificate-image">
+            <img src="Image/python.png" alt="Python Certificate">
           </div>
-          <div class="row">
-            <!-- ...existing code... -->
-<div class="contact-form reveal">
-  <h3>Send Message</h3>
-  <form action="/contact" method="POST">
-    <div class="input-box">
-      <input type="text" name="name" placeholder="Name" required>
-    </div>
-    <div class="input-box">
-      <input type="email" name="email" placeholder="Email" required>
-    </div>
-    <div class="input-box">
-      <textarea name="message" rows="8" cols="80" placeholder="Message" required></textarea>
-    </div>
-    <div class="input-box">
-      <input type="submit" class="send-btn" value="Send">
-    </div>
-  </form>
-</div>
-<!-- ...existing code... -->
+          <div class="service-icon"><i class="fab fa-python"></i></div>
+          <div class="info">
+            <h3>Python (HackerRank)</h3>
+            <p>Earned Python certification from HackerRank by passing skill assessment tests.</p>
           </div>
         </div>
-      </section>
-  
-      <footer class="footer">
-        <span class="footer-title">Anmol Gupta</span>
-        <p>Copyright @2025 <a href="#">Coder Anmol</a>. All Rights Reserved.</p>
-      </footer>
 
+        <div class="card" data-aos="zoom-in" data-aos-duration="900">
+          <div class="certificate-image">
+            <img src="Image/problem solving.png" alt="Problem Solving Certificate">
+          </div>
+          <div class="service-icon"><i class="fas fa-brain"></i></div>
+          <div class="info">
+            <h3>Problem Solving (HackerRank)</h3>
+            <p>Certified in logical and analytical thinking via HackerRank's problem-solving tests.</p>
+          </div>
+        </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>  ##Not used yet
-    <script>
-      AOS.init({offset:0});
-    </script>
-    <script>
+        <div class="card" data-aos="fade-left" data-aos-duration="900">
+          <div class="certificate-image">
+            <img src="Image/sql.png" alt="SQL Certificate">
+          </div>
+          <div class="service-icon"><i class="fas fa-database"></i></div>
+          <div class="info">
+            <h3>DBMS / SQL (HackerRank)</h3>
+            <p>Successfully completed SQL certification test on HackerRank.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        window.addEventListener("scroll", function(){
-    scrollBtn.classList.toggle("active", window.scrollY > 500);
+  <!-- Contact -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up" data-aos-duration="900">
+      <h2>Contact Me</h2>
+      <div class="bar"></div>
+    </div>
+
+    <div class="cards">
+      <div class="card" data-aos="fade-up" data-aos-duration="800">
+        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="info">
+          <h3>Address</h3>
+          <span>Kanpur, Uttar Pradesh</span>
+        </div>
+      </div>
+
+      <div class="card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+        <div class="info">
+          <h3>Phone</h3>
+          <!-- Click to Call -->
+          <a href="tel:+917905842085">+91 7905842085</a>
+        </div>
+      </div>
+
+      <div class="card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+        <div class="info">
+          <h3>Email Address</h3>
+          <!-- Click to Email -->
+          <a href="mailto:anmolgupta2704@gmail.com">anmolgupta2704@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+        <div class="contact-icon"><i class="fas fa-globe"></i></div>
+        <div class="info">
+          <h3>Website</h3>
+          <!-- Click to Open Website -->
+          <a href="https://cyberganj.onrender.com" target="_blank">cyberganj.onrender.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form" data-aos="zoom-in" data-aos-duration="900">
+      <h3>Send Message</h3>
+      <form action="/contact" method="POST">
+        <div class="input-box">
+          <input type="text" name="name" placeholder="Name" required>
+        </div>
+        <div class="input-box">
+          <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input-box">
+          <textarea name="message" rows="8" cols="80" placeholder="Message" required></textarea>
+        </div>
+        <div class="input-box">
+          <button type="submit" class="btn send-btn">Send</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span class="footer-title">Anmol Gupta</span>
+    <p>Copyright @2025 <a href="#">Coder Anmol</a>. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button class="scrollToTop-btn" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- AOS + Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    
+const roles = [
+  "Problem Solver",
+  "Ethical Hacker",
+  "Web Developer",
+  "Tech Enthusiast"
+];
+
+let roleIndex = 0;
+let charIndex = 0;
+const typingElement = document.getElementById("typing");
+
+function typeEffect() {
+  if (charIndex < roles[roleIndex].length) {
+    typingElement.textContent += roles[roleIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(typeEffect, 100);
+  } else {
+    setTimeout(eraseEffect, 2000);
+  }
+}
+
+function eraseEffect() {
+  if (charIndex > 0) {
+    typingElement.textContent = roles[roleIndex].substring(0, charIndex - 1);
+    charIndex--;
+    setTimeout(eraseEffect, 50);
+  } else {
+    roleIndex = (roleIndex + 1) % roles.length;
+    setTimeout(typeEffect, 500);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(typeEffect, 1000);
 });
 
 
+    AOS.init({ offset: 0, once: true, duration: 700, easing: 'ease-out' });
 
-// document.querySelector(".scrollToTop-btn").addEventListener("click", () => {
-//   document.body.scrollTop = 0;
-//  document.documentElement.scrollTop = 0;
-// });
+    // Sticky header
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('sticky', window.scrollY > 4);
+    });
 
-        const menuBtn = document.querySelector(".menu-btn");
-        const navigation = document.querySelector(".navigation");
-        const navigationItems = document.querySelector(".navigation a");
+    // Mobile menu
+    const menuBtn = document.querySelector('.menu-btn');
+    const nav = document.querySelector('.navigation');
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+    document.querySelectorAll('.navigation a').forEach(a=>{
+      a.addEventListener('click',()=>{
+        menuBtn.classList.remove('active');
+        nav.classList.remove('active');
+      });
+    });
 
-        menuBtn.addEventListener("click", () => {
-            menuBtn.classList.toggle("active");
-            navigation.classList.toggle("active");
-        })
+    // Scroll to top
+    const scrollBtn = document.querySelector('.scrollToTop-btn');
+    window.addEventListener('scroll', ()=>{
+      scrollBtn.classList.toggle('active', window.scrollY > 600);
+    });
+    scrollBtn.addEventListener('click', ()=>{
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
 
-        // Navigation Effects
-        window.addEventListener("scroll", function(){
-            const header = document.querySelector("header");
-            header.classList.toggle("sticky", window.scrollY > 0);
-        })
+    // Reveal utility (for .reveal or [data-animate]) + Skills progress
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+          // If skill lines, add .in-view to start fill animation
+          entry.target.querySelectorAll?.('.line').forEach(line=> line.classList.add('in-view'));
+        }
+      });
+    }, {threshold:.25});
 
-        navigationItems.forEach((navigationItem) => {
-            navigationItem.addEventListener("click", () => {
-                menuBtn.classList.remove("active");
-                navigation.classList.remove("active")
-            })
-        })
-
-
-
-    </script>
+    document.querySelectorAll('.reveal, [data-animate], .skills .col-right').forEach(el=>observer.observe(el));
+  </script>
 </body>
 </html>
