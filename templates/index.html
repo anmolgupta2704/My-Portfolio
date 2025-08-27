@@ -479,6 +479,7 @@
 </head>
 <body>
 
+
   <!-- Header -->
   <header id="top">
     <nav class="nav">
@@ -496,90 +497,84 @@
 
 <!-- Hero -->
 <section class="main" id="main">
-  <div class="container hero">
-    <div class="left">
-      <div class="kicker" data-aos="fade-right" data-aos-duration="900">Hello, I'm</div>
-      <h1 data-aos="fade-right" data-aos-duration="900" data-aos-delay="100">
-        Anmol Gupta
-      </h1>
+    <div class="container hero">
+      <div class="left">
+        <div class="kicker" data-aos="fade-right" data-aos-duration="900">Hello, I'm</div>
+        <h1 data-aos="fade-right" data-aos-duration="900" data-aos-delay="100">
+          Anmol Gupta
+        </h1>
 
-      <div class="content">
-        <!-- ✅ Removed duplicate "Hello, I'm Anmol Gupta" -->
-        <h4><span id="typing"></span><span class="cursor">|</span></h4>
-        <p> Aspiring <b>SDE</b> with strong <b>DSA</b> foundation.  
-          Passionate about <b>Cybersecurity</b>, and skilled in  
-          <b>Python</b>, <b>Django</b>, <b>SQL</b>, and modern development tools.</p>
-        <a href="#about" class="btn">About Me</a>
+        <div class="content">
+          <h4><span id="typing"></span><span class="cursor">|</span></h4>
+          <p> Aspiring <b>SDE</b> with strong <b>DSA</b> foundation.  
+            Passionate about <b>Cybersecurity</b>, and skilled in  
+            <b>Python</b>, <b>Django</b>, <b>SQL</b>, and modern development tools.</p>
+          <a href="#about" class="btn">About Me</a>
+        </div>
+
+        <div class="cta-row" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="250">
+          <a href="{{ url_for('static', filename='resume/ats.pdf') }}" class="btn" target="_blank">
+            <i class="fas fa-file-download"></i> See My Resume
+          </a>
+          <a href="#contact" class="btn secondary"><i class="fas fa-paper-plane"></i> Hire Me</a>
+        </div>
+
+        <div class="media-icons" data-aos="fade-in" data-aos-duration="900" data-aos-delay="350">
+          <a href="https://leetcode.com/u/2301641720021_A/" target="_blank">
+            <img src="{{ url_for('static', filename='Image/download.png') }}" alt="LeetCode" style="width:24px; height:24px;">
+          </a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/anmol-gupta-714933308"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/anmolgupta2704"><i class="fab fa-github"></i></a>
+        </div>
       </div>
 
-      <div class="cta-row" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="250">
-        <a href="d:/Users/anmol/Desktop/resume/ats.pdf" class="btn">
-          <i class="fas fa-file-download"></i> See My Resume
-        </a>
-        <a href="#contact" class="btn secondary"><i class="fas fa-paper-plane"></i> Hire Me</a>
-      </div>
-
-      <div class="media-icons" data-aos="fade-in" data-aos-duration="900" data-aos-delay="350">
-        <a href="https://leetcode.com/u/2301641720021_A/" target="_blank">
-  <img src="Image/download.png" alt="LeetCode" style="width:24px; height:24px;">
-</a>
-
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.linkedin.com/in/anmol-gupta-714933308"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/anmolgupta2704"><i class="fab fa-github"></i></a>
-      </div>
-    </div>
-
-    <div class="right" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="100">
-      <div class="profile-wrap">
-        <div class="neon-hex">
-          <img src="Image/img1.png" alt="Anmol Gupta">
+      <div class="right" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="100">
+        <div class="profile-wrap">
+          <div class="neon-hex">
+            <img src="{{ url_for('static', filename='Image/12.png') }}" alt="Anmol Gupta">
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
   <!-- About -->
-<section class="about" id="about">
-  <div class="container">
-    <div class="section-title" data-aos="fade-up" data-aos-duration="900">
-      <h2>About Me</h2>
-      <div class="bar"></div>
-    </div>
-
-    <div class="about-grid">
-      <!-- Profile Image -->
-      <div class="img-card" data-aos="fade-right" data-aos-duration="1000">
-        <img src="Image/img1.png" alt="Profile">
+ <section class="about" id="about">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up" data-aos-duration="900">
+        <h2>About Me</h2>
+        <div class="bar"></div>
       </div>
 
-      <!-- About Text -->
-      <div class="col-right" data-aos="fade-left" data-aos-duration="1000">
-        <h3 class="content-title">Hey There! I am Anmol Gupta</h3>
-        <p class="paragraph-text">
-          I’m an aspiring <b>Software Development Engineer (SDE)</b> with a strong foundation in 
-          <b>Data Structures & Algorithms</b> and a deep interest in <b>Cybersecurity</b>.  
-          My focus is on building scalable applications while keeping them secure.
-        </p>
-        <p class="paragraph-text">
-          I work extensively with <b>Python</b>, <b>Django</b>, and <b>SQL</b>, and I’m passionate 
-          about solving problems that require logical thinking and clean architecture.  
-          With every project, I aim to enhance my skills in <b>development + security</b>.
-        </p>
-        <p class="paragraph-text">
-          Outside of coding, I continuously explore new technologies, practice problem-solving, 
-          and challenge myself to stay sharp in both <b>competitive programming</b> 
-          and <b>ethical hacking</b>.
-        </p>
-        <a href="#projects" class="btn" style="margin-top:14px">
-          <i class="fas fa-code"></i> See My Work
-        </a>
+      <div class="about-grid">
+        <div class="img-card" data-aos="fade-right" data-aos-duration="1000">
+          <img src="{{ url_for('static', filename='Image/img1.png') }}" alt="Profile">
+        </div>
+
+        <div class="col-right" data-aos="fade-left" data-aos-duration="1000">
+          <h3 class="content-title">Hey There! I am Anmol Gupta</h3>
+          <p class="paragraph-text">
+            I’m an aspiring <b>Software Development Engineer (SDE)</b> with a strong foundation in 
+            <b>Data Structures & Algorithms</b> and a deep interest in <b>Cybersecurity</b>.  
+            My focus is on building scalable applications while keeping them secure.
+          </p>
+          <p class="paragraph-text">
+            I work extensively with <b>Python</b>, <b>Django</b>, and <b>SQL</b>, and I’m passionate 
+            about solving problems that require logical thinking and clean architecture.  
+          </p>
+          <p class="paragraph-text">
+            Outside of coding, I continuously explore new technologies, practice problem-solving, 
+            and challenge myself in <b>competitive programming</b> and <b>ethical hacking</b>.
+          </p>
+          <a href="#projects" class="btn" style="margin-top:14px">
+            <i class="fas fa-code"></i> See My Work
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
   <!-- Skills -->
@@ -639,23 +634,18 @@
 </section>
 
   <!-- Certification -->
-  <section class="certification" id="certification">
+   <section class="certification" id="certification">
     <div class="container">
       <div class="section-title" data-aos="fade-up" data-aos-duration="900">
         <h2>My Certificates</h2>
         <div class="bar"></div>
       </div>
 
-      <p class="container" style="color:var(--muted);max-width:860px;margin:0 auto 26px;text-align:center" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
-        Below are some of the certifications I've earned over the course of my learning journey.
-      </p>
-
       <div class="content">
         <div class="card" data-aos="fade-right" data-aos-duration="900">
           <div class="certificate-image">
-            <img src="Image/python.png" alt="Python Certificate">
+            <img src="{{ url_for('static', filename='Image/python.png') }}" alt="Python Certificate">
           </div>
-          <div class="service-icon"><i class="fab fa-python"></i></div>
           <div class="info">
             <h3>Python (HackerRank)</h3>
             <p>Earned Python certification from HackerRank by passing skill assessment tests.</p>
@@ -664,9 +654,8 @@
 
         <div class="card" data-aos="zoom-in" data-aos-duration="900">
           <div class="certificate-image">
-            <img src="Image/problem solving.png" alt="Problem Solving Certificate">
+            <img src="{{ url_for('static', filename='Image/problem solving.png') }}" alt="Problem Solving Certificate">
           </div>
-          <div class="service-icon"><i class="fas fa-brain"></i></div>
           <div class="info">
             <h3>Problem Solving (HackerRank)</h3>
             <p>Certified in logical and analytical thinking via HackerRank's problem-solving tests.</p>
@@ -675,9 +664,8 @@
 
         <div class="card" data-aos="fade-left" data-aos-duration="900">
           <div class="certificate-image">
-            <img src="Image/sql.png" alt="SQL Certificate">
+            <img src="{{ url_for('static', filename='Image/sql.png') }}" alt="SQL Certificate">
           </div>
-          <div class="service-icon"><i class="fas fa-database"></i></div>
           <div class="info">
             <h3>DBMS / SQL (HackerRank)</h3>
             <p>Successfully completed SQL certification test on HackerRank.</p>
