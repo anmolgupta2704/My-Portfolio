@@ -343,6 +343,70 @@
   to { width: 60%; }
 }
 
+
+/* ---------- Projects ---------- */
+.Projects .content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  margin-top: 20px;
+}
+
+.Projects .card {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), 
+              box-shadow 0.35s, 
+              border-color 0.35s;
+  backdrop-filter: blur(8px);
+}
+
+.Projects .card:hover {
+  transform: translateY(-8px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 16px 60px rgba(91, 140, 255, 0.25),
+              0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.Projects .project img {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.Projects .info h3 {
+  margin: 0.2rem 0 0.4rem;
+  font-weight: 800;
+}
+
+.Projects .info p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Project link button */
+.Projects .info a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 16px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.Projects .info a:hover {
+  background: #00bcd4;   /* hover pe thoda cyan blue */
+  transform: translateY(-3px);
+}
+
     /* ---------- Certification Cards ---------- */
     .certification .content{
       display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px
@@ -489,6 +553,7 @@
         <a href="#main">Home</a>
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
+        <a href="#Projects">Projects</a>
         <a href="#certification">Certification</a>
         <a href="#contact">Contact</a>
       </div>
@@ -632,6 +697,44 @@
     </div>
   </div>
 </section>
+<!-- Projects -->
+  <section class="Projects" id="Projects">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up" data-aos-duration="900">
+        <h2>My Projects</h2>
+        <div class="bar"></div>
+      </div>
+
+      <div class="content">
+        <div class="card" data-aos="fade-right" data-aos-duration="900">
+  <div class="project">
+    
+   
+  </div>
+  <div class="info">
+    <h3>Resume Detection System</h3>
+    <p>A system that automatically analyzes and detects important information from resumes.</p>
+    <a href="https://github.com/anmolgupta2704/PROJECT-RESUME-DETECTION"> Click Here For View Project</a>
+  </div>
+</div>
+
+<div class="card" data-aos="fade-right" data-aos-duration="900">
+  <div class="project">
+
+    
+  </div>
+  <div class="info">
+    <h3>Tomato Leaf AI</h3>
+    <p>Deep learning based system to detect diseases in tomato leaves.</p>
+    <a href="https://github.com/ankit-prabhavak/TomatoLeafAI"> Click Here For View Project</a>
+  </div>
+</div>
+
+
+        
+      </div>
+    </div>
+  </section>
 
   <!-- Certification -->
    <section class="certification" id="certification">
@@ -715,7 +818,7 @@
         <div class="info">
           <h3>Website</h3>
           <!-- Click to Open Website -->
-          <a href="https://cyberganj.onrender.com" target="_blank">cyberganj.onrender.com</a>
+          <a href="https://cyberfibre.onrender.com" target="_blank">cyberfibre.onrender.com</a>
         </div>
       </div>
     </div>
