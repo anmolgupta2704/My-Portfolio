@@ -937,6 +937,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }, {threshold:.25});
 
     document.querySelectorAll('.reveal, [data-animate], .skills .col-right').forEach(el=>observer.observe(el));
+
+
+import express from "express";
+import axios from "axios";
+
+    const url = `https://portfolio-xbn1.onrender.com`;
+const interval = 30000;
+
+function reloadWebsite() {
+  axios
+    .get(url)
+    .then((response) => {
+      console.log("website reloded");
+    })
+    .catch((error) => {
+      console.error(`Error : ${error.message}`);
+    });
+}
   </script>
 </body>
 </html>
