@@ -8,7 +8,8 @@
   />
   <title>Anmol Portfolio </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -97,13 +98,69 @@
     }
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
 
-    .navigation{display:flex;gap:22px;align-items:center}
-    .navigation a{
-      color:var(--muted);text-decoration:none;font-weight:500;font-size:.98rem;
-      padding:10px 14px;border-radius:12px;transition:color .25s, background .25s, transform .25s;
-    }
-    .navigation a:hover{color:#fff;background:rgba(255,255,255,.06);transform:translateY(-2px)}
-    .menu-btn{display:none;width:40px;height:40px;cursor:pointer;background:url('Image/menu.png') center/26px no-repeat;filter:invert(1);opacity:.8}
+   /* Default Desktop View */
+.navigation {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+.navigation a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: .98rem;
+  padding: 10px 14px;
+  border-radius: 12px;
+  transition: color .25s, background .25s, transform .25s;
+}
+
+.navigation a:hover {
+  color: #fff;
+  background: rgba(255,255,255,.06);
+  transform: translateY(-2px);
+}
+
+.menu-btn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  background: url('Image/menu.png') center/26px no-repeat;
+  filter: invert(1);
+  opacity: .8;
+  z-index: 1100;
+}
+
+/* ---------- Mobile View ---------- */
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block; /* Show hamburger */
+  }
+
+  .navigation {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hide off screen */
+    width: 70%;
+    height: 100%;
+    flex-direction: column;
+    background: #0f172a; /* Tumhare theme ka bg */
+    padding-top: 80px;
+    gap: 18px;
+    transition: 0.3s ease;
+    z-index: 1000;
+  }
+
+  .navigation.active {
+    right: 0; /* Slide in */
+  }
+
+  .navigation a {
+    display: block;
+    font-size: 1.1rem;
+  }
+}
 
     /* ---------- Hero ---------- */
     .main{min-height:100vh;display:grid;place-items:center;padding-top:120px}
@@ -852,11 +909,26 @@
 
   <!-- Scroll to top -->
   <button class="scrollToTop-btn" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
+  
+ 
 
   <!-- AOS + Scripts -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.querySelector(".menu-btn");
+    const nav = document.querySelector(".navigation");
+
+    menuBtn.addEventListener("click", () => {
+      nav.classList.toggle("active");
+    });
+  });
+
+
+
+
 const roles = [
   "Problem Solver",
   "Ethical Hacker",
