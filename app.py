@@ -4,14 +4,11 @@ import os
 
 app = Flask(__name__)
 
-# Database ka path instance folder me
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-DB_PATH = os.path.join(BASE_DIR, "instance", "contact.db")
+# Database path inside instance folder
+DB_PATH = os.path.join(app.instance_path, "contact.db")
+os.makedirs(app.instance_path, exist_ok=True)
 
-# Ensure instance folder exists
-os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-
-# Database setup (ek baar chalega)
+# Database setup
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
@@ -24,19 +21,16 @@ def init_db():
     conn.commit()
     conn.close()
 
-# Home route (portfolio ka index.html render hoga)
 @app.route("/")
 def home():
-    return render_template("index.html")  # tumhara portfolio ka main page
+    return render_template("index.html")
 
-# Contact Form submission
 @app.route("/contact", methods=["POST"])
 def contact():
     name = request.form.get("name")
     email = request.form.get("email")
     message = request.form.get("message")
 
-    # Save into database
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     cur.execute("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)", 
@@ -44,7 +38,7 @@ def contact():
     conn.commit()
     conn.close()
 
-    return redirect("/")  # submit hone ke baad wapas home page par bhej do
+    return redirect("/")
 
 if __name__ == "__main__":
     init_db()
