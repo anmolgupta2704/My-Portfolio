@@ -3,7 +3,7 @@ import sqlite3
 
 app = Flask(__name__)
 
-# Database setup (ek baar chalega)
+# Database setup 
 def init_db():
     conn = sqlite3.connect("contact.db")
     cur = conn.cursor()
@@ -16,10 +16,10 @@ def init_db():
     conn.commit()
     conn.close()
 
-# Home route (portfolio ka index.html render hoga)
+# Home route 
 @app.route("/")
 def home():
-    return render_template("index.html")  # tumhara portfolio ka main page
+    return render_template("index.html")  #  portfolio ka main page
 
 # Contact Form submission
 @app.route("/contact", methods=["POST"])
@@ -36,7 +36,7 @@ def contact():
     conn.commit()
     conn.close()
 
-    return redirect("/")  # submit hone ke baad wapas home page par bhej do
+    return redirect("/")  # submit 
 
 if __name__ == "__main__":
     init_db()
