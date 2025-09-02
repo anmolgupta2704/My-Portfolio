@@ -1,76 +1,70 @@
 from flask import Flask, request, render_template, redirect
-import sqlite3
-import smtplib
+import smtplib, ssl, os
 from email.mime.text import MIMEText
-import os
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 
-# Database setup (ek baar chalega)
-def init_db():
-    os.makedirs("instance", exist_ok=True)   # folder 
-    conn = sqlite3.connect("instance/contact.db")
-    cur = conn.cursor()
-    cur.execute('''CREATE TABLE IF NOT EXISTS messages (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL,
-                    email TEXT NOT NULL,
-                    message TEXT NOT NULL
-                )''')
-    conn.commit()
-    conn.close()
+# --------------------------
+# Load env variables (Render dashboard me set karna hoga)
+# --------------------------
+MAIL_USERNAME = os.getenv("MAIL_USERNAME")   # your gmail
+MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")   # your 16-digit app password
+MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")   # jisme receive karna hai
 
-
-# Email bhejne ka function
+# --------------------------
+# Email sender function
+# --------------------------
 def send_email(name, email, message):
-    sender = "anmolgupta2704@gmail.com"       
-    receiver = "anmolgupta2704@gmail.com"        
-    password = "loil bvzv yros vozx"           
-
-    subject = f"New Contact from {name}"
-    body = f"Name: {name}\nEmail: {email}\nMessage: {message}"
-
-    msg = MIMEText(body)
-    msg["Subject"] = subject
-    msg["From"] = sender
-    msg["To"] = receiver
-
     try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(sender, password)
-            server.sendmail(sender, receiver, msg.as_string())
-        print(" Email sent successfully")
+        subject = "New Contact Form Submission"
+        body = f"""
+        You have a new message from your portfolio contact form:
+
+        Name: {name}
+        Email: {email}
+        Message: {message}
+        """
+
+        msg = MIMEMultipart()
+        msg["From"] = MAIL_USERNAME
+        msg["To"] = MAIL_RECEIVER
+        msg["Subject"] = subject
+        msg.attach(MIMEText(body, "plain"))
+
+        # Gmail SMTP (SSL)
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(MAIL_USERNAME, MAIL_PASSWORD)
+            server.sendmail(MAIL_USERNAME, MAIL_RECEIVER, msg.as_string())
+
+        print("✅ Email sent successfully!")
+
     except Exception as e:
-        print(" Email error:", e)
+        print(f"❌ Error sending email: {e}")
+        raise e  # taaki Render logs me dikhe
 
 
-# Home route 
+# --------------------------
+# Routes
+# --------------------------
 @app.route("/")
 def home():
-    return render_template("index.html")  #  main page
+    return render_template("index.html")   
 
-
-# Contact Form submission
 @app.route("/contact", methods=["POST"])
 def contact():
-    name = request.form.get("name")
-    email = request.form.get("email")
-    message = request.form.get("message")
+    try:
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
 
-    # Save into database
-    conn = sqlite3.connect("instance/contact.db")
-    cur = conn.cursor()
-    cur.execute("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)", 
-                (name, email, message))
-    conn.commit()
-    conn.close()
-
-    # Email bhejna
-    send_email(name, email, message)
-
-    return redirect("/")  # submit 
+        send_email(name, email, message)
+        return redirect("/")   
+    except Exception as e:
+        return f"Error: {e}", 500
 
 
+# --------------------------
 if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)
