@@ -38,10 +38,10 @@ def send_email(name, email, message):
             server.login(MAIL_USERNAME, MAIL_PASSWORD)
             server.sendmail(MAIL_USERNAME, MAIL_RECEIVER, msg.as_string())
 
-        print("✅ Email sent successfully!")
+        print(" Email sent successfully!")
 
     except Exception as e:
-        print(f"❌ Error sending email: {e}")
+        print(f" Error sending email: {e}")
         raise e  # taaki Render logs me dikhe
 
 
