@@ -458,11 +458,23 @@
       transition:border-color .25s, background .25s; font:inherit
     }
     .input-box input:focus,.input-box textarea:focus{border-color:var(--brand);background:rgba(255,255,255,.09)}
-    .send-btn{
-      width:100%;margin-top:8px
-    }
+    .send-btn {
+  display: flex;
+  justify-content: center;   /* horizontally center */
+  align-items: center;       /* vertically center */
+  text-align: center;
+  width: 100%;               /* button full width rahe */
+  height: 50px;             /* button ki height */
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to right, #5a78f0, #a16eff);
+  color: white;
+  cursor: pointer;
+}
+
     .contact .info a {
-  color: #fff;                /* White text (tum apne theme ke hisaab se badal sakte ho) */
+  color: #fff;                /* White text  */
   text-decoration: none;      /* No underline */
   font-weight: 500;           /* Slightly bold */
   transition: 0.3s;           /* Smooth effect */
@@ -589,7 +601,7 @@
           <a href="https://leetcode.com/u/2301641720021_A/" target="_blank">
             <img src="{{ url_for('static', filename='Image/download.png') }}" alt="LeetCode" style="width:24px; height:24px;">
           </a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.instagram.com/__.anmol.__01?igsh=YjNqb3pmY3R5aW55"><i class="fab fa-instagram"></i></a>
           <a href="https://www.linkedin.com/in/anmol-gupta-714933308"><i class="fab fa-linkedin"></i></a>
           <a href="https://github.com/anmolgupta2704"><i class="fab fa-github"></i></a>
         </div>
@@ -825,7 +837,7 @@
     </div>
 
     <div class="contact-form" data-aos="zoom-in" data-aos-duration="900">
-      <h3>Send Message</h3>
+      <h3> Send Message</h3>
       <form action="/contact" method="POST">
         <div class="input-box">
           <input type="text" name="name" placeholder="Name" required>
