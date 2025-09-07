@@ -8,9 +8,9 @@ app = Flask(__name__)
 # --------------------------
 # Load env variables (Render dashboard me set karna hoga)
 # --------------------------
-MAIL_USERNAME = os.getenv("anmolgupta2704@gmail.com")   # your gmail
-MAIL_PASSWORD = os.getenv("ymmcsgphybkndghl")   # your 16-digit app password
-MAIL_RECEIVER = os.getenv("anmolgupta2704@gmail.com")   # jisme receive karna hai
+MAIL_USERNAME = os.getenv("MAIL_USERNAME")   # your gmail
+MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")   # your 16-digit app password
+MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")   # jisme receive karna hai
 
 # --------------------------
 # Email sender function
