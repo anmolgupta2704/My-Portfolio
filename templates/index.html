@@ -843,6 +843,13 @@
 
   </div>
 </section>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("status") === "success") {
+    alert("✅ Your message has been sent!");
+  }
+</script>
+
 
   <!-- Footer -->
   <footer class="footer">

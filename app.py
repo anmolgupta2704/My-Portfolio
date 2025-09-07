@@ -60,7 +60,8 @@ def contact():
         message = request.form.get("message")
 
         send_email(name, email, message)
-        return redirect("/")   
+        return redirect("/?status=success")
+ 
     except Exception as e:
         return f"Error: {e}", 500
 
