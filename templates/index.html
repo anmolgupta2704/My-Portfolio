@@ -21,6 +21,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
   />
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <style>
     :root{
@@ -846,9 +847,24 @@
 <script>
   const params = new URLSearchParams(window.location.search);
   if (params.get("status") === "success") {
-    alert("✅ Your message has been sent!");
+    Swal.fire({
+      title: '✅ Message Sent!',
+      text: 'Thanks for contacting me. I will get back to you soon.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+      background: '#f0f9ff',
+      color: '#333',
+      confirmButtonColor: '#3085d6',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    });
   }
 </script>
+
 
 
   <!-- Footer -->
