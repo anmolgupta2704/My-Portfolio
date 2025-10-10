@@ -6,11 +6,11 @@ from email.mime.multipart import MIMEMultipart
 app = Flask(__name__)
 
 # --------------------------
-# Load env variables (Render dashboard me set karna hoga)
+# Load env variables 
 # --------------------------
-MAIL_USERNAME = os.getenv("MAIL_USERNAME")   # your gmail
-MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")   # your 16-digit app password
-MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")   # jisme receive karna hai
+MAIL_USERNAME = os.getenv("MAIL_USERNAME")  
+MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")  
+MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")   
 
 # --------------------------
 # Email sender function
@@ -42,7 +42,7 @@ def send_email(name, email, message):
 
     except Exception as e:
         print(f" Error sending email: {e}")
-        raise e  # taaki Render logs me dikhe
+        raise e  
 
 
 # --------------------------
