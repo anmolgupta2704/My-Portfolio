@@ -86,16 +86,36 @@
       display:flex;align-items:center;justify-content:space-between;
       padding:16px 22px;max-width:1180px;margin:0 auto;
     }
-    .brand{
-      text-decoration:none;color:#fff;font-weight:800;letter-spacing:.5px;
-      font-size:1.2rem;display:inline-flex;align-items:center;gap:.6rem;
-    }
-    .brand::before{
-      content:"";width:10px;height:10px;border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, #fff, #7aa4ff 35%, transparent 70%);
-      box-shadow:0 0 18px #6ea0ff,0 0 36px #9a6bff;
-      animation:pulse 2.4s ease-in-out infinite;
-    }
+    .brand {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .5px;
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+
+.brand::before {
+  content: none;
+}
+
+/* logo image style */
+.logo {
+  width: 38px;      /* apne hisaab se adjust kar lena */
+  height: 38px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: rotate(5deg) scale(1.1);
+}
+
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
 
     .navigation{display:flex;gap:22px;align-items:center}
@@ -107,75 +127,78 @@
     /* ---------- Responsive Navbar ---------- */
 /* Menu Button */
   /* Menu Button - Icons are not locally available, using generic style here */
-        .menu-btn {
-            display: none;
-            width: 36px;
-            height: 36px;
-            cursor: pointer;
-            background: #fff; /* Placeholder */
-            opacity: 0.9;
-            transition: transform 0.3s ease, background 0.3s ease;
-            -webkit-mask: url('https://cdn-icons-png.flaticon.com/512/1828/1828859.png') center/26px no-repeat;
-            mask: url('https://cdn-icons-png.flaticon.com/512/1828/1828859.png') center/26px no-repeat; 
-        }
+   /* Hide the checkbox */
+#menu-toggle {
+  display: none;
+}
 
-        .menu-btn.active {
-            background: #fff; /* Placeholder */
-            transform: rotate(90deg);
-            -webkit-mask: url('https://cdn-icons-png.flaticon.com/512/463/463612.png') center/24px no-repeat; 
-            mask: url('https://cdn-icons-png.flaticon.com/512/463/463612.png') center/24px no-repeat; 
-        }
+/* MENU BUTTON (hamburger icon) */
+.menu-btn {
+  display: none;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  background: #fff;
+  opacity: 0.9;
+  transition: transform 0.3s ease, background 0.3s ease;
+  -webkit-mask: url('https://cdn-icons-png.flaticon.com/512/1828/1828859.png') center/26px no-repeat;
+  mask: url('https://cdn-icons-png.flaticon.com/512/1828/1828859.png') center/26px no-repeat;
+  z-index: 1001;
+}
 
-        /* Mobile Navigation FIX */
-        @media (max-width: 860px) {
-            .navigation {
-                position: fixed;
-                top: 72px;
-                right: -100%;
-                width: 70%;
-                height: calc(100vh - 72px);
-                
-                /* ** THE FIX IS HERE: **
-                1. Used a solid, dark color that matches the theme.
-                2. Explicitly removed the blur filter.
-                */
-                background: #0e1428; /* Solid dark background color */
-                backdrop-filter: none; /* Remove the blur/transparency effect */
-                
-                border-left: 1px solid rgba(255, 255, 255, 0.08);
-                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 26px;
-                padding-top: 40px;
-                transition: right 0.4s ease;
-                z-index: 998;
-            }
+/* MOBILE VIEW */
+@media (max-width: 860px) {
+  .menu-btn {
+    display: block;
+  }
 
-            .navigation.active {
-                right: 0;
-            }
+  .navigation {
+    position: fixed;
+    top: 72px;
+    right: -100%;
+    width: 70%;
+    height: calc(100vh - 72px);
+    background: #0e1428;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    padding-top: 40px;
+    transition: right 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    z-index: 998;
+  }
 
-            .navigation a {
-                color: #dfe6ff;
-                font-size: 1.1rem;
-                padding: 10px 20px;
-                border-radius: 8px;
-                width: 80%;
-                text-align: center;
-                transition: background 0.3s ease;
-            }
+  /* When checkbox checked, show menu */
+  #menu-toggle:checked ~ .navigation {
+    right: 0;
+    opacity: 1;
+  }
 
-            .navigation a:hover {
-                background: rgba(91, 140, 255, 0.12);
-            }
+  /* When checked — turn hamburger into X */
+  #menu-toggle:checked + .menu-btn {
+    background: #fff;
+    transform: rotate(90deg);
+    -webkit-mask: url('https://cdn-icons-png.flaticon.com/512/1828/1828859.png') center/26px no-repeat;
+  mask: url('https://cdn-icons-png.flaticon.com/512/1828/1828859.png') center/26px no-repeat;
+  }
 
-            .menu-btn {
-                display: block;
-            }
-        }
+  .navigation a {
+    color: #dfe6ff;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    width: 80%;
+    text-align: center;
+    transition: background 0.3s ease;
+  }
 
+  .navigation a:hover {
+    background: rgba(91, 140, 255, 0.12);
+  }
+}
 
 
 
@@ -298,47 +321,132 @@
     @keyframes glide{50%{transform:translateX(100%)}100%{transform:translateX(100%)}}
 
     /* ---------- About ---------- */
-    .about{
-      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent);
-    }
-    /* ...existing code... */
-.about .img-card {
+ .about {
   position: relative;
-  border-radius: 22px;
-  padding: 0; /* Remove padding for full coverage */
-  background: var(--card);
-  backdrop-filter: blur(8px);
-  box-shadow: var(--shadow);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
+  padding: 80px 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  overflow: hidden;
 }
 
-.about .img-card img {
-  border-radius: 18px;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  aspect-ratio: unset; /* Remove aspect-ratio for full coverage */
-  filter: saturate(1.02) contrast(1.02);
-  display: block;
+.about-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  flex-wrap: wrap;
 }
-/* ...existing code... */
-    /* .about-grid{
-      display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center
-    }
-    .about .img-card{
-      position:relative;border-radius:22px;padding:16px;
-      background:var(--card);backdrop-filter:blur(8px);box-shadow:var(--shadow)
-    }
-    .about .img-card img{
-      border-radius:18px;aspect-ratio:1/1;object-fit:cover;
-      filter:saturate(1.02) contrast(1.02)
-    } */
-    .about .content-title{font-size:1.6rem;font-weight:800;margin:6px 0 12px}
-    .about .paragraph-text{color:var(--muted);line-height:1.8}
+
+.about-image {
+  position: relative;
+  flex: 1 1 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+/* .about-image:hover {
+  transform: rotateY(10deg) rotateX(5deg) scale(1.05);
+} */
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  filter: brightness(1.05) saturate(1.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  /* transition: transform 0.5s ease, filter 0.5s ease; */
+}
+
+/* .about-image:hover img {
+  transform: scale(1.1);
+  filter: brightness(1.3) saturate(1.4);
+} */
+
+.glow-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #00bcd4, #007bff, #9c27b0);
+  opacity: 0.5;
+  filter: blur(30px);
+  z-index: -1;
+  animation: glowMove 5s infinite alternate ease-in-out;
+}
+
+@keyframes glowMove {
+  0% { transform: translate(-10px, -10px) scale(1); }
+  100% { transform: translate(10px, 10px) scale(1.1); }
+}
+
+.about-content {
+  flex: 1 1 500px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 28px 34px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.about-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 50px rgba(91, 140, 255, 0.35);
+}
+
+.about-content h3 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.about-content h3 span {
+  color: var(--brand);
+}
+
+.about-content p {
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 14px;
+  font-size: 1rem;
+}
+
+.about-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 20px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.about-btn:hover {
+  background: #00bcd4;
+  transform: translateY(-4px);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .about-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-content {
+    padding: 24px 22px;
+  }
+
+  .about-image:hover {
+    transform: none;
+  }
+}
 
     /* ---------- Skills ---------- */
     .skills{position:relative}
@@ -457,17 +565,43 @@
   border-radius: 18px;
   padding: 22px;
   box-shadow: var(--shadow);
-  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), 
-              box-shadow 0.35s, 
-              border-color 0.35s;
   backdrop-filter: blur(8px);
+  transition: 
+    transform 0.4s cubic-bezier(.2,.8,.2,1),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.Projects .card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at top left,
+    rgba(0, 188, 212, 0.12),
+    transparent 60%
+  );
+  transform: rotate(25deg);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.Projects .card:hover::before {
+  opacity: 1;
 }
 
 .Projects .card:hover {
-  transform: translateY(-8px) scale(1.01);
+  transform: translateY(-10px) scale(1.02);
   border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 16px 60px rgba(91, 140, 255, 0.25),
-              0 6px 18px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 35px rgba(0, 188, 212, 0.25),
+              0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .Projects .project img {
@@ -475,6 +609,13 @@
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.Projects .info {
+  position: relative;
+  z-index: 2;
 }
 
 .Projects .info h3 {
@@ -502,34 +643,60 @@
 }
 
 .Projects .info a:hover {
-  background: #00bcd4;   /* hover pe thoda cyan blue */
+  background: #00bcd4;
   transform: translateY(-3px);
 }
 
+
     /* ---------- Certification Cards ---------- */
-    .certification .content{
-      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px
-    }
-    .card{
-      background:var(--card);border:1px solid rgba(255,255,255,.08);
-      border-radius:18px;padding:22px;
-      box-shadow:var(--shadow);
-      transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s;
-      backdrop-filter:blur(8px);
-    }
-    .card:hover{
-      transform:translateY(-8px) scale(1.01);
-      border-color:rgba(255,255,255,.18);
-      box-shadow:0 16px 60px rgba(91,140,255,.25), 0 6px 18px rgba(0,0,0,.35);
-    }
-    .certificate-image{
-      border-radius:12px;overflow:hidden;margin-bottom:12px
-    }
-    .service-icon{
-      font-size:42px;color:var(--brand);margin:6px 0 10px
-    }
-    .card .info h3{margin:.2rem 0 .2rem;font-weight:800}
-    .card .info p{color:var(--muted);line-height:1.7}
+  .certification .content {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.35s ease,
+              border-color 0.35s ease;
+  backdrop-filter: blur(8px);
+}
+
+
+.card:hover {
+  transform: translateY(-10px) scale(1.05);
+  border-color: rgba(0, 173, 181, 0.5); /* Accent glow color */
+  box-shadow: 0 0 25px rgba(0, 173, 181, 0.4),
+              0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.certificate-image {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.service-icon {
+  font-size: 42px;
+  color: var(--brand);
+  margin: 6px 0 10px;
+}
+
+.card .info h3 {
+  margin: 0.2rem 0 0.2rem;
+  font-weight: 800;
+}
+
+.card .info p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 
     /* ---------- Contact ---------- */
     .contact .cards{
@@ -585,21 +752,41 @@
 
 /* ---------- Footer ---------- */
 .footer {
-  background: linear-gradient(180deg, rgba(10, 20, 40, 1) 0%, rgba(5, 10, 25, 1) 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 60px 10% 30px;
+  position: relative;
+  background: radial-gradient(circle at top left, #0a1124, #050a18);
+  padding: 70px 10% 30px;
   color: #dfe6ff;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  overflow: hidden;
   box-shadow: 0 -8px 25px rgba(91, 140, 255, 0.1);
 }
+
+/* Animated gradient overlay
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 4px;
+  background: linear-gradient(90deg, #00bcd4, #6f86ff, #ff8a00);
+  background-size: 300% 100%;
+  animation: moveGradient 6s linear infinite;
+}
+@keyframes moveGradient {
+  0% { background-position: 0% 0; }
+  100% { background-position: 300% 0; }
+} */
 
 .footer-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 40px;
+  gap: 50px;
+  z-index: 2;
+  position: relative;
+  animation: fadeUp 1.2s ease forwards;
+}
+@keyframes fadeUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .footer-about p {
@@ -611,79 +798,95 @@
 
 .footer h2,
 .footer h3 {
-  
-     
-      background:linear-gradient(90deg, #fff, #ffd199);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
- 
-  
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 12px;
   font-weight: 700;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, #fff, #00bcd4, #ffd199);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineText 4s ease-in-out infinite;
+}
+@keyframes shineText {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.4); }
 }
 
 .footer-links ul {
   list-style: none;
   padding: 0;
 }
-
 .footer-links li {
   margin-bottom: 10px;
 }
-
 .footer-links a {
   color: #dfe6ff;
   text-decoration: none;
-  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+  transition: 0.3s;
 }
-
+.footer-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #00bcd4;
+  transition: width 0.3s ease;
+}
 .footer-links a:hover {
   color: #00bcd4;
   transform: translateX(5px);
+}
+.footer-links a:hover::after {
+  width: 100%;
 }
 
 .footer-contact p {
   color: #a8b2d1;
   margin-bottom: 8px;
 }
-
-.footer-contact p a {
+.footer-contact a {
   color: #00bcd4;
   text-decoration: none;
-  transition: 0.3s;
 }
-
-.footer-contact p a:hover {
+.footer-contact a:hover {
   color: #fff;
+  text-shadow: 0 0 8px #00bcd4;
 }
 
+/* Glowing social icons */
 .social-icons {
   display: flex;
   gap: 20px;
-  margin-top: 10px;
+  margin-top: 14px;
 }
-
 .social-icons a {
   color: #dfe6ff;
   font-size: 1.4rem;
-  transition: transform 0.3s, color 0.3s;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.4s ease;
 }
-
 .social-icons a:hover {
-  color: #00bcd4;
-  transform: translateY(-4px) scale(1.1);
-  text-shadow: 0 0 12px rgba(0, 188, 212, 0.5);
+  color: #fff;
+  background: linear-gradient(135deg, #00bcd4, #6f86ff);
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
 }
 
 .footer-bottom {
   text-align: center;
   font-size: 0.9rem;
   color: #8892b0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: 18px;
-  margin-top: 10px;
+  margin-top: 30px;
 }
-
 .footer-bottom span {
   color: #00bcd4;
 }
@@ -692,14 +895,16 @@
 @media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
-    text-align: center;
     align-items: center;
+    text-align: center;
+  }
+  .footer-about p {
+    max-width: 90%;
   }
   .social-icons {
     justify-content: center;
   }
 }
-
 
     /* ---------- Scroll to Top ---------- */
     .scrollToTop-btn{
@@ -760,6 +965,102 @@
     margin: auto;
   }
 }
+/* ---------- TESTIMONIALS SECTION ---------- */
+#testimonials {
+  padding: 90px 8%;
+  background: var(--bg);
+  text-align: center;
+}
+
+#testimonials .heading {
+  font-size: 2.3rem;
+  color: var(--accent, #00bcd4);
+  margin-bottom: 60px;
+  position: relative;
+  display: inline-block;
+}
+
+#testimonials .heading::after {
+  content: "";
+  width: 60%;
+  height: 3px;
+  background: var(--accent, #00bcd4);
+  position: absolute;
+  bottom: -8px;
+  left: 20%;
+  border-radius: 2px;
+}
+
+.testimonials-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.testimonial-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  width: 320px;
+  padding: 30px;
+  color: #dfe6ff;
+  text-align: left;
+  box-shadow: 0 0 25px rgba(0, 188, 212, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 35px rgba(0, 188, 212, 0.25);
+}
+
+.testimonial-box p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  color: #c9d3ff;
+  font-style: italic;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.author img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 2px solid var(--accent, #00bcd4);
+}
+
+.author .info h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.author .info span {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .testimonials-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .testimonial-box {
+    width: 90%;
+  }
+}
+
 
   </style>
 </head>
@@ -767,21 +1068,30 @@
 
 
   <!-- Header -->
-  <header id="top">
-    <nav class="nav">
-      <a href="#" class="brand">Portfolio</a>
-      
-       <div class="menu-btn" aria-label="Toggle Menu"></div>
-      <div class="navigation">
-        <a href="#main">Home</a>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#Projects">Projects</a>
-        <a href="#certification">Certification</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </nav>
-  </header>
+<header id="top">
+  <nav class="nav">
+    <a href="#" class="brand">
+  <img src="{{ url_for('static', filename='Image/logo.png') }}" alt="Logo" class="logo">
+  Portfolio
+</a>
+
+
+    <!-- hidden checkbox toggle -->
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-btn" aria-label="Toggle Menu"></label>
+
+    <div class="navigation">
+      <a href="#main">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#Projects">Projects</a>
+      <a href="#certification">Certification</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+
   
   
 
@@ -832,39 +1142,35 @@
 
   <!-- About -->
  <section class="about" id="about">
-    <div class="container">
-      <div class="section-title" data-aos="fade-up" data-aos-duration="900">
-        <h2>About Me</h2>
-        <div class="bar"></div>
+  <div class="container">
+    <div class="section-title" data-aos="fade-up" data-aos-duration="900">
+      <h2>About Me</h2>
+      <div class="bar"></div>
+    </div>
+
+    <div class="about-wrapper" data-aos="fade-up" data-aos-duration="1000">
+      <div class="about-image">
+        <div class="glow-border"></div>
+        <img src="{{ url_for('static', filename='Image/img1.png') }}" alt="Anmol Gupta">
       </div>
 
-      <div class="about-grid">
-        <div class="img-card" data-aos="fade-right" data-aos-duration="1000">
-          <img src="{{ url_for('static', filename='Image/img1.png') }}" alt="Profile">
-        </div>
-
-        <div class="col-right" data-aos="fade-left" data-aos-duration="1000">
-          <h3 class="content-title">Hey There! I am Anmol Gupta</h3>
-          <p class="paragraph-text">
-            I’m an aspiring <b>Software Development Engineer (SDE)</b> with a strong foundation in 
-            <b>Data Structures & Algorithms</b> and a deep interest in <b>Cybersecurity</b>.  
-            My focus is on building scalable applications while keeping them secure.
-          </p>
-          <p class="paragraph-text">
-            I work extensively with <b>Python</b>, <b>Django</b>, and <b>SQL</b>, and I’m passionate 
-            about solving problems that require logical thinking and clean architecture.  
-          </p>
-          <p class="paragraph-text">
-            Outside of coding, I continuously explore new technologies, practice problem-solving, 
-            and challenge myself in <b>competitive programming</b> and <b>ethical hacking</b>.
-          </p>
-          <a href="#Projects" class="btn" style="margin-top:14px">
-            <i class="fas fa-code"></i> See My Work
-          </a>
-        </div>
+      <div class="about-content">
+        <h3>Hey There! 👋 I’m <span>Anmol Gupta</span></h3>
+        <p>
+          A passionate <b>Software Development Engineer (SDE)</b> in the making, blending logic with creativity.  
+          I love building <b>efficient, secure & scalable</b> applications while exploring the world of <b>Cybersecurity</b>.
+        </p>
+        <p>
+          My toolkit includes <b>Python</b>, <b>Django</b>, <b>SQL</b>, and a sharp problem-solving mindset honed through <b>DSA</b>.
+        </p>
+        <p>
+          When I’m not coding, I’m probably exploring new tech stacks, debugging the matrix, or diving into competitive programming.
+        </p>
+        <a href="#Projects" class="btn about-btn"><i class="fas fa-code"></i> View My Work</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
   <!-- Skills -->
@@ -1002,6 +1308,51 @@
       </div>
     </div>
   </section>
+  
+  <section id="testimonials" class="section">
+  <div class="container">
+      <div class="section-title" data-aos="fade-up" data-aos-duration="900">
+        <h2>Testimonials</h2>
+        <div class="bar"></div>
+      </div>
+  <div class="testimonials-container">
+    
+    <div class="testimonial-box">
+      <p>"Anmol is a dedicated and talented developer. His attention to detail and passion for learning really stand out!"</p>
+      <div class="author">
+        <img src="https://i.pravatar.cc/100?img=3" alt="Ravi Sharma">
+        <div class="info">
+          <h4>Ravi Sharma</h4>
+          <span>Software Engineer at TCS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-box">
+      <p>"Working with Anmol was an amazing experience. His logical thinking and creativity make him a great teammate!"</p>
+      <div class="author">
+        <img src="https://i.pravatar.cc/100?img=4" alt="Priya Singh">
+        <div class="info">
+          <h4>Priya Singh</h4>
+          <span>UI/UX Designer</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-box">
+      <p>"He consistently delivers quality work on time. Truly an asset for any development team!"</p>
+      <div class="author">
+        <img src="https://i.pravatar.cc/100?img=5" alt="Arjun Patel">
+        <div class="info">
+          <h4>Arjun Patel</h4>
+          <span>Project Manager</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
   <!-- Contact -->
 <section class="contact" id="contact">
@@ -1125,6 +1476,7 @@
     <p>© 2025 <span>Anmol Gupta</span>. All Rights Reserved.</p>
   </div>
 </footer>
+
 
 <!-- Font Awesome CDN -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
