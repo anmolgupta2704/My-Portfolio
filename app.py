@@ -1,35 +1,42 @@
 from flask import Flask, request, render_template, redirect, url_for
 import os
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
-
-MAIL_USERNAME = os.getenv("MAIL_USERNAME")  # verified SendGrid sender
-MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")  # your email to receive messages
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")  # SendGrid API key
+MAIL_USERNAME = os.getenv("MAIL_USERNAME")  # Your Gmail/SMTP email
+MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")  # App password for Gmail
+MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")  # Where you want to receive messages
 
 def send_email(name, email, message):
-    """Send email via SendGrid API"""
+    """Send email using SMTP"""
     try:
-        if not MAIL_USERNAME or not MAIL_RECEIVER or not SENDGRID_API_KEY:
+        if not MAIL_USERNAME or not MAIL_PASSWORD or not MAIL_RECEIVER:
             raise ValueError("Environment variables not set correctly!")
 
-        msg = Mail(
-            from_email=MAIL_USERNAME,
-            to_emails=MAIL_RECEIVER,
-            subject="New Contact Form Submission",
-            html_content=f"""
-            <h3>You have a new message from your portfolio contact form:</h3>
-            <p><strong>Name:</strong> {name}</p>
-            <p><strong>Email:</strong> {email}</p>
-            <p><strong>Message:</strong> {message}</p>
-            """
-        )
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
-        response = sg.send(msg)
-        print(f"Email sent, status code: {response.status_code}")
+        # Create the email
+        msg = MIMEMultipart()
+        msg['From'] = MAIL_USERNAME
+        msg['To'] = MAIL_RECEIVER
+        msg['Subject'] = "New Contact Form Submission"
+        body = f"""
+        <h3>You have a new message from your portfolio contact form:</h3>
+        <p><strong>Name:</strong> {name}</p>
+        <p><strong>Email:</strong> {email}</p>
+        <p><strong>Message:</strong> {message}</p>
+        """
+        msg.attach(MIMEText(body, 'html'))
+
+        # Connect to SMTP server and send
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(MAIL_USERNAME, MAIL_PASSWORD)
+            server.sendmail(MAIL_USERNAME, MAIL_RECEIVER, msg.as_string())
+            print("Email sent successfully!")
 
     except Exception as e:
         print(f"Error sending email: {e}")
