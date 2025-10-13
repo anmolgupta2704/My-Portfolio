@@ -1,41 +1,34 @@
 from flask import Flask, request, render_template, redirect, url_for
-import smtplib, ssl, os
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 from dotenv import load_dotenv
 
-# Load environment variables from .env
 load_dotenv()
-
-MAIL_USERNAME = os.getenv("MAIL_USERNAME")  
-MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")  
-MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")  
 
 app = Flask(__name__)
 
+MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+
 def send_email(name, email, message):
-    """Send email via Gmail SMTP"""
+    """Send email via SendGrid API"""
     try:
-        subject = "New Contact Form Submission"
-        body = f"""
-You have a new message from your portfolio contact form:
-
-Name: {name}
-Email: {email}
-Message: {message}
-        """
-
-        msg = MIMEMultipart()
-        msg["From"] = MAIL_USERNAME
-        msg["To"] = MAIL_RECEIVER
-        msg["Subject"] = subject
-        msg.attach(MIMEText(body, "plain"))
-
-        # Gmail SMTP SSL
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-            server.login(MAIL_USERNAME, MAIL_PASSWORD)
-            server.sendmail(MAIL_USERNAME, MAIL_RECEIVER, msg.as_string())
+        msg = Mail(
+            from_email=MAIL_USERNAME,
+            to_emails=MAIL_RECEIVER,
+            subject="New Contact Form Submission",
+            html_content=f"""
+            <h3>You have a new message from your portfolio contact form:</h3>
+            <p><strong>Name:</strong> {name}</p>
+            <p><strong>Email:</strong> {email}</p>
+            <p><strong>Message:</strong> {message}</p>
+            """
+        )
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(msg)
+        print(f"Email sent, status code: {response.status_code}")
 
     except Exception as e:
         print(f"Error sending email: {e}")
