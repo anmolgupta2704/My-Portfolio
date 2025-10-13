@@ -1731,7 +1731,7 @@
   </div>
 </section>
 <script>
-  const params = new URLSearchParams(window.location.search);
+   const status = "{{ status if status else '' }}";
   if (params.get("status") === "success") {
     Swal.fire({
       title: '✅ Message Sent!',
