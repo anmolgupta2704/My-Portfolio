@@ -1731,8 +1731,9 @@
   </div>
 </section>
 <script>
-   const status = "{{ status if status else '' }}";
-  if (params.get("status") === "success") {
+  const status = "{{ status if status else '' }}";
+
+  if (status === "success") {
     Swal.fire({
       title: '✅ Message Sent!',
       text: 'Thanks for contacting me. I will get back to you soon.',
@@ -1749,6 +1750,8 @@
       }
     });
   }
+
+ 
 </script>
 
 
