@@ -1003,7 +1003,7 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  width: 320px;
+  width: 272px;
   padding: 30px;
   color: #dfe6ff;
   text-align: left;
@@ -1253,17 +1253,29 @@
 }
 
 /* ---------- Contact Section ---------- */
-#theme-toggle:checked ~ * #contact input,
-#theme-toggle:checked ~ * #contact textarea {
-  background: #fff;
-  border: 1px solid #ccc;
-  color: #111;
+
+/* 🌞 LIGHT MODE */
+#theme-toggle:checked ~ * .input-box input,
+#theme-toggle:checked ~ * .input-box textarea {
+  background: #ffffff !important;
+  border: 1px solid #ccc !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;  /* Safari fix */
+  caret-color: #000000 !important;
   box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
-#theme-toggle:checked ~ * #contact input:focus,
-#theme-toggle:checked ~ * #contact textarea:focus {
-  border-color: #4c73ff;
-  box-shadow: 0 0 8px rgba(76,115,255,0.3);
+
+#theme-toggle:checked ~ * .input-box input::placeholder,
+#theme-toggle:checked ~ * .input-box textarea::placeholder {
+  color: #666 !important;
+}
+
+#theme-toggle:checked ~ * .input-box input:focus,
+#theme-toggle:checked ~ * .input-box textarea:focus {
+  border-color: #4c73ff !important;
+  box-shadow: 0 0 8px rgba(76,115,255,0.3) !important;
+  background: #fff !important;
+  color: #000 !important;
 }
 
 /* ---------- Cards ---------- */
@@ -1382,7 +1394,7 @@
   <header id="top">
     <nav class="nav">
       <a href="#" class="brand">
-        <img src="{{ url_for('static', filename='Image/logo1.jpeg') }}" alt="Logo" class="logo">
+        <img src="{{ url_for('static', filename='Image/logo2.png') }}" alt="Logo" class="logo">
         Portfolio
       </a>
 
@@ -1571,9 +1583,18 @@
     <a href="https://github.com/ankit-prabhavak/TomatoLeafAI"> Click Here For View Project</a>
   </div>
 </div>
+<div class="card" data-aos="fade-right" data-aos-duration="900">
+  <div class="project">
 
+  <div class="info">
+  <h3>Face Recognition Application</h3>
+  <p>AI based system that can detect and recognize human faces with high accuracy.</p>
+  <a href="https://github.com/ankit-prabhavak/FaceRecognitionUnifiedInterfaceTechnoloy">
+    Click Here For View Project
+  </a>
+</div>
+</div>
 
-        
       </div>
     </div>
   </section>
@@ -1616,6 +1637,49 @@
             <p>Successfully completed SQL certification test on HackerRank.</p>
           </div>
         </div>
+      
+<div class="card" data-aos="fade-left" data-aos-duration="900">
+  <div class="certificate-image">
+    <img 
+      src="{{ url_for('static', filename='Image/Hack2skillagenticday.png') }}" 
+      alt="Google Cloud Hack2Skill Agentic Day Hackathon Certificate" 
+      loading="lazy"
+    >
+  </div>
+  <div class="info">
+    <h3>Google Cloud (Hack2Skill - Agentic Day)</h3>
+    <p>Successfully participated and completed the Hackathon event on Google Cloud.</p>
+  </div>
+</div>
+ <div class="card" data-aos="fade-right" data-aos-duration="900">
+    <div class="certificate-image">
+      <img 
+        src="{{ url_for('static', filename='Image/python1.png') }}" 
+        alt="Coursera Python Data Structures Certificate" 
+        loading="lazy"
+      >
+    </div>
+    <div class="info">
+      <h3>Coursera - Python Data Structures</h3>
+      <p>Successfully completed the Python Data Structures course and assignments on Coursera.</p>
+    </div>
+  </div>
+  <!-- Infosys Springboard Certificate -->
+<div class="card" data-aos="fade-left" data-aos-duration="900">
+  <div class="certificate-image">
+    <img 
+      src="{{ url_for('static', filename='Image/HTML.jpg') }}" 
+      alt="Infosys Springboard Certificate" 
+      loading="lazy"
+    >
+  </div>
+  <div class="info">
+    <h3>HTML5 </h3>
+    <p>Successfully completed the training program and gained knowledge in emerging technologies and professional skills.</p>
+  </div>
+</div>
+
+
       </div>
     </div>
   </section>
@@ -1645,7 +1709,7 @@
         <img src="{{ url_for('static', filename='Image/kavy.jpg') }}" alt="Kavya Chaturvedi">
         <div class="info">
           <h4>Kavya Chaturvedi</h4>
-          <span>Backend/Andriod Developer</span>
+          <span>Backend/Android Developer</span>
         </div>
       </div>
     </div>
@@ -1655,7 +1719,7 @@
       <div class="author">
         <img src="{{ url_for('static', filename='Image/devra.jpg') }}" alt="Devashsish Triphathi">
         <div class="info">
-          <h4>Devashsish Triphathi</h4>
+          <h4>Devashish Triphathi</h4>
           <span>Frontend Developer</span>
         </div>
       </div>
