@@ -1003,7 +1003,7 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  width: 272px;
+  width: 270px;
   padding: 30px;
   color: #dfe6ff;
   text-align: left;
@@ -1322,9 +1322,9 @@
   color: #333;
 }
 #theme-toggle:checked ~ footer.footer .social-icons a:hover {
-  color: #4c73ff;
-  transform: scale(1.25);
-  text-shadow: 0 0 10px rgba(76,115,255,0.4);
+  color: #f1f2c9;
+  transform: scale(1.10);
+  text-shadow: 0 0 10px rgba(113, 140, 239, 0.4);
 }
 #theme-toggle:checked ~ footer.footer .footer-bottom {
   color: #333;
@@ -1376,6 +1376,19 @@
 #theme-toggle:checked ~ header .menu-btn,
 #theme-toggle:checked ~ header .navigation a {
   transition: all 0.35s ease;
+}
+/* 🌞 Light Mode - Testimonials name fix */
+#theme-toggle:checked ~ * .testimonials-container .info h4 {
+  color: #051a62 !important;   /* Dark blue ya koi bhi visible dark color */
+  font-weight: 600;
+}
+
+#theme-toggle:checked ~ * .testimonials-container .info span {
+  color: #333 !important;      /* Subtitle bhi visible ho */
+}
+#theme-toggle:checked ~ * .testimonials-container .info h4:hover {
+  color: #4c73ff;
+  text-shadow: 0 0 8px rgba(76, 115, 255, 0.3);
 }
 
 
