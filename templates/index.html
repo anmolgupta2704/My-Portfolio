@@ -102,18 +102,31 @@
   content: none;
 }
 
-/* logo image style */
+/* 🔹 Logo Base Style */
 .logo {
-  width: 38px;      /* apne hisaab se adjust kar lena */
-  height: 38px;
-  border-radius: 8px;
-  object-fit: cover;
-  box-shadow: 0 0 10px rgba(255,255,255,0.4);
-  transition: transform 0.3s ease;
+  width: 45px;                  /* Slightly larger for better clarity */
+  height: 42px;
+  border-radius: 10px;          /* smooth round edges */
+  object-fit: cover;            /* prevent stretch */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.25);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  margin-right: 10px;           /* spacing between logo and text */
+  vertical-align: middle;
 }
 
+/* 🔹 Hover Effect */
 .logo:hover {
-  transform: rotate(5deg) scale(1.1);
+  transform: rotate(6deg) scale(1.1);
+  box-shadow: 0 4px 14px rgba(76, 115, 255, 0.4);
+}
+
+/* 🌞 Light Mode Fix */
+#theme-toggle:checked ~ header .logo {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+#theme-toggle:checked ~ header .logo:hover {
+  box-shadow: 0 4px 12px rgba(76, 115, 255, 0.3);
 }
 
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
@@ -1468,7 +1481,7 @@
       <div class="right" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="100">
         <div class="profile-wrap">
           <div class="neon-hex">
-            <img src="{{ url_for('static', filename='Image/12.png') }}" alt="Anmol Gupta">
+            <img src="{{ url_for('static', filename='Image/1234.png') }}" alt="Anmol Gupta">
           </div>
         </div>
       </div>
@@ -1487,7 +1500,7 @@
     <div class="about-wrapper" data-aos="fade-up" data-aos-duration="1000">
       <div class="about-image">
         <div class="glow-border"></div>
-        <img src="{{ url_for('static', filename='Image/img1.png') }}" alt="Anmol Gupta">
+        <img src="{{ url_for('static', filename='Image/img3.jpeg') }}" alt="Anmol Gupta">
       </div>
 
       <div class="about-content">
@@ -1774,7 +1787,7 @@
         <div class="info">
           <h3>Phone</h3>
           <!-- Click to Call -->
-          <a href="tel:+917905842085">+91 7905842085</a>
+          <a href="tel:+917905842085">+91 790XXXXXXX</a>
         </div>
       </div>
 
