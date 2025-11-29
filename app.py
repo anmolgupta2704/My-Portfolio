@@ -1,44 +1,51 @@
 from flask import Flask, request, render_template, redirect, url_for
 import os
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 
-# Load environment variables
+# Brevo API imports
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
+
 load_dotenv()
 
 app = Flask(__name__)
 
-MAIL_USERNAME = os.getenv("MAIL_USERNAME")
-MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
-MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")
-SMTP_HOST = os.getenv("SMTP_HOST", "smtp-relay.brevo.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
-
+# ENV variables
+BREVO_API_KEY = os.getenv("BREVO_API_KEY")
+MAIL_USERNAME = os.getenv("MAIL_USERNAME")     # Verified Sender in Brevo
+MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")     # Where messages come
 
 def send_email(name, email, message):
-    if not MAIL_USERNAME or not MAIL_PASSWORD or not MAIL_RECEIVER:
+    if not BREVO_API_KEY or not MAIL_USERNAME or not MAIL_RECEIVER:
         raise ValueError("Missing required environment variables.")
 
-    msg = MIMEMultipart()
-    msg['From'] = MAIL_USERNAME
-    msg['To'] = MAIL_RECEIVER
-    msg['Subject'] = "📩 New Contact Form Submission"
+    # Configure Brevo API
+    configuration = sib_api_v3_sdk.Configuration()
+    configuration.api_key['api-key'] = BREVO_API_KEY
 
-    body = f"""
-    <h3>New Contact Message</h3>
-    <p><strong>Name:</strong> {name}</p>
-    <p><strong>Email:</strong> {email}</p>
-    <p><strong>Message:</strong><br>{message}</p>
-    """
-    msg.attach(MIMEText(body, 'html'))
+    api_instance = sib_api_v3_sdk.TransactionalEmailsApi(
+        sib_api_v3_sdk.ApiClient(configuration)
+    )
 
-    # Send using Brevo SMTP (Safe for Render)
-    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-        server.starttls()
-        server.login(MAIL_USERNAME, MAIL_PASSWORD)
-        server.sendmail(MAIL_USERNAME, MAIL_RECEIVER, msg.as_string())
+    # Email content
+    email_content = sib_api_v3_sdk.SendSmtpEmail(
+        sender={"name": "Contact Form", "email": MAIL_USERNAME},
+        to=[{"email": MAIL_RECEIVER}],
+        subject="📩 New Contact Form Submission",
+        html_content=f"""
+        <h3>New Contact Message</h3>
+        <p><strong>Name:</strong> {name}</p>
+        <p><strong>Email:</strong> {email}</p>
+        <p><strong>Message:</strong><br>{message}</p>
+        """
+    )
+
+    # Send email
+    try:
+        api_instance.send_transac_email(email_content)
+    except ApiException as e:
+        print("Error sending email: ", e)
+        raise
 
 
 @app.route("/")
