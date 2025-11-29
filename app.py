@@ -13,6 +13,9 @@ app = Flask(__name__)
 MAIL_USERNAME = os.getenv("MAIL_USERNAME")
 MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
 MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")
+SMTP_HOST = os.getenv("SMTP_HOST", "smtp-relay.brevo.com")
+SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
+
 
 def send_email(name, email, message):
     if not MAIL_USERNAME or not MAIL_PASSWORD or not MAIL_RECEIVER:
@@ -31,15 +34,18 @@ def send_email(name, email, message):
     """
     msg.attach(MIMEText(body, 'html'))
 
-    # Gmail SMTP
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+    # Send using Brevo SMTP (Safe for Render)
+    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+        server.starttls()
         server.login(MAIL_USERNAME, MAIL_PASSWORD)
         server.sendmail(MAIL_USERNAME, MAIL_RECEIVER, msg.as_string())
+
 
 @app.route("/")
 def home():
     status = request.args.get("status")
     return render_template("index.html", status=status)
+
 
 @app.route("/contact", methods=["POST"])
 def contact():
@@ -56,6 +62,7 @@ def contact():
     except Exception as e:
         print("Error:", e)
         return redirect(url_for("home", status="error"))
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
