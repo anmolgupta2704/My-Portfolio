@@ -24,6 +24,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <style>
+    
     :root{
       --bg:#0a0f1f;
       --bg-soft:#0f1730;
@@ -1404,6 +1405,73 @@
   text-shadow: 0 0 8px rgba(76, 115, 255, 0.3);
 }
 
+.chatbot-toggle {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: #6c63ff;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  padding: 15px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.chatbot {
+  position: fixed;
+  bottom: 90px;
+  left: 25px;
+  width: 320px;
+  background: #fff;
+  display: none;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.chatbot-header {
+  background: #6c63ff;
+  color: white;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chatbot-body {
+  height: 250px;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.bot-msg {
+  background: #6149db;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.user-msg {
+  background: #6c63ff;
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  text-align: right;
+}
+
+.chatbot-footer {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.chatbot-footer input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+}
+
+
 
 
 
@@ -1988,5 +2056,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   </script>
+  <!-- Chatbot -->
+<div class="chatbot">
+  <div class="chatbot-header">
+    <span>Ask Anmol 🤖</span>
+    <button onclick="closeChat()">×</button>
+  </div>
+
+  <div class="chatbot-body" id="chatBody">
+    <div class="bot-msg">Hi 👋 Ask me about skills, projects, resume or contact.</div>
+  </div>
+
+  <div class="chatbot-footer">
+    <input type="text" id="userInput" placeholder="Type message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<button class="chatbot-toggle" onclick="openChat()">💬</button>
+<script>
+function openChat() {
+  document.querySelector(".chatbot").style.display = "flex";
+}
+
+function closeChat() {
+  document.querySelector(".chatbot").style.display = "none";
+}
+
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const chatBody = document.getElementById("chatBody");
+  chatBody.innerHTML += `<div class="user-msg">${msg}</div>`;
+  input.value = "";
+
+  fetch("/chatbot", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: msg })
+  })
+  .then(res => res.json())
+  .then(data => {
+    chatBody.innerHTML += `<div class="bot-msg">${data.reply}</div>`;
+    chatBody.scrollTop = chatBody.scrollHeight;
+  });
+}
+</script>
+
 </body>
 </html> 

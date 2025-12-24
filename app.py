@@ -1,6 +1,7 @@
-from flask import Flask, request, render_template, redirect, url_for
+
 import os
 from dotenv import load_dotenv
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 
 # Brevo API imports
 import sib_api_v3_sdk
@@ -47,7 +48,32 @@ def send_email(name, email, message):
         print("Error sending email: ", e)
         raise
 
+def chatbot_reply(msg):
+    msg = msg.lower()
 
+    if "hello" in msg or "hi" in msg:
+        return "👋 Hello! I'm Anmol's portfolio assistant. How can I help you?"
+
+    elif "resume" in msg:
+        return "📄 You can download Anmol's resume from the Resume button on the homepage."
+
+    elif "skills" in msg:
+        return "💻 Skills: DSA, Python, Django, SQL, Web Development & Cybersecurity."
+
+    elif "projects" in msg:
+        return "🚀 Projects include Resume Detection System, Tomato Leaf AI, and Face Recognition App."
+
+    elif "contact" in msg or "email" in msg:
+        return "📩 You can contact Anmol via the contact form or email."
+
+    elif "hire" in msg or "job" in msg:
+        return "🤝 Anmol is open for SDE and Software roles."
+
+    elif "college" in msg:
+        return "🎓 Anmol is a B.Tech Computer Science student specializing in Cybersecurity."
+
+    else:
+        return "🤔 I can help with skills, projects, resume, or contact info."
 @app.route("/")
 def home():
     status = request.args.get("status")
@@ -69,7 +95,14 @@ def contact():
     except Exception as e:
         print("Error:", e)
         return redirect(url_for("home", status="error"))
+    
+@app.route("/chatbot", methods=["POST"])
+def chatbot():
+    data = request.get_json()
+    user_msg = data.get("message", "")
 
+    reply = chatbot_reply(user_msg)
+    return jsonify({"reply": reply})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
