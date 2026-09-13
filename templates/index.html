@@ -16,7 +16,7 @@
   <!-- EmailJS — direct browser email, no backend needed -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
-    emailjs.init("wS5yIb1lxa7bafxob"); // ← Replace with your EmailJS public key
+    emailjs.init("wS5yIb1lxa7bafxob"); // ← Replace with your EmailJS public 
   </script>
 
   <style>
@@ -378,11 +378,63 @@
     [data-theme="light"] code{background:rgba(42,92,246,.08)}
     [data-aos]{will-change:transform,opacity}
 
+    /* ===== PAGE LOADER ===== */
+    .page-loader{position:fixed;inset:0;z-index:5000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .5s ease,visibility .5s ease}
+    .page-loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .loader-ring{width:52px;height:52px;border-radius:50%;border:3px solid var(--border-2);border-top-color:var(--blue);animation:loader-spin .8s linear infinite}
+    @keyframes loader-spin{to{transform:rotate(360deg)}}
+    .loader-text{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);letter-spacing:.1em}
+    .loader-text .dot-anim{display:inline-block;animation:loader-dots 1.4s steps(1) infinite}
+    @keyframes loader-dots{0%{content:""}0%,32%{opacity:0}33%,65%{opacity:1}66%,100%{opacity:0}}
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    .scroll-progress{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--grad-1);z-index:1001;box-shadow:0 0 10px rgba(79,126,248,.6);transition:width .1s linear}
+
+    /* ===== CUSTOM CURSOR (desktop only) ===== */
+    .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:6000;transform:translate(-50%,-50%);will-change:transform;opacity:0;transition:opacity .3s ease}
+    .cursor-dot{width:6px;height:6px;background:var(--blue-2);box-shadow:0 0 8px var(--blue)}
+    .cursor-ring{width:34px;height:34px;border:1px solid var(--border-2);transition:opacity .3s ease,width .25s ease,height .25s ease,background .25s ease,border-color .25s ease}
+    body.cursor-ready .cursor-dot,body.cursor-ready .cursor-ring{opacity:1}
+    .cursor-ring.hovering{width:52px;height:52px;background:rgba(79,126,248,.1);border-color:var(--blue)}
+    @media(hover:none),(max-width:900px){.cursor-dot,.cursor-ring{display:none}}
+
+    /* ===== NAV ACTIVE INDICATOR ===== */
+    .nav-links{position:relative}
+    .nav-indicator{position:absolute;bottom:0;height:2px;background:var(--grad-1);border-radius:2px;transition:transform .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1),opacity .2s ease;opacity:0;pointer-events:none}
+
+    /* ===== RIPPLE EFFECT ===== */
+    .btn{position:relative;overflow:hidden}
+    .btn .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:ripple-anim .6s ease-out;pointer-events:none}
+    @keyframes ripple-anim{to{transform:scale(3);opacity:0}}
+
+    /* ===== IMAGE REVEAL ===== */
+    img.img-reveal{opacity:0;filter:blur(8px);transform:scale(1.03);transition:opacity .6s ease,filter .6s ease,transform .6s ease}
+    img.img-reveal.loaded{opacity:1;filter:blur(0);transform:scale(1)}
+
+    /* ===== CHAT BADGE ===== */
+    .chat-toggle{position:fixed;bottom:24px;left:24px;z-index:999}
+    .chat-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);animation:badge-pulse 1.8s ease-in-out infinite;box-shadow:0 0 0 2px var(--bg)}
+    .chat-badge.hidden{display:none}
+    @keyframes badge-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+
     @media(max-width:900px){.hero-inner,.about-grid,.skills-wrap,.contact-layout{grid-template-columns:1fr}.profile-frame{display:none}.footer-inner{grid-template-columns:1fr 1fr}}
     @media(max-width:700px){section{padding:70px 18px}.hamburger{display:flex}.nav-links{display:none;position:fixed;inset:68px 0 0 0;flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:999;backdrop-filter:blur(20px)}[data-theme="dark"] .nav-links{background:rgba(6,9,18,.97)}[data-theme="light"] .nav-links{background:rgba(240,244,255,.97)}.nav-links.open{display:flex}.nav-links a{font-size:1.1rem;padding:12px 24px;width:200px;text-align:center}.footer-inner{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.fp1,.fp2,.fp3{display:none}.chatbot-panel{width:calc(100vw - 32px);left:16px}}
   </style>
 </head>
 <body>
+
+<!-- PAGE LOADER -->
+<div class="page-loader" id="pageLoader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">LOADING<span class="dot-anim">…</span></div>
+</div>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- Ambient 3D orbs -->
 <div class="orb orb-1"></div>
@@ -401,6 +453,7 @@
     <div class="nav-links" id="nav-links">
       <a href="#hero">Home</a><a href="#about">About</a><a href="#skills">Skills</a>
       <a href="#projects">Projects</a><a href="#certs">Certs</a><a href="#contact">Contact</a>
+      <span class="nav-indicator" id="navIndicator"></span>
     </div>
     <div class="nav-right">
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
@@ -643,7 +696,7 @@
 </footer>
 
 <!-- CHATBOT -->
-<button class="chat-toggle" id="chat-toggle-btn">💬</button>
+<button class="chat-toggle" id="chat-toggle-btn">💬<span class="chat-badge" id="chatBadge">1</span></button>
 <div class="chatbot-panel" id="chatbot-panel">
   <div class="chat-header">
     <div class="chat-header-info"><div class="chat-avatar">🤖</div><div><div class="chat-title">Anmol's Assistant</div><div class="chat-sub">AI-powered · Ask anything</div></div></div>
@@ -787,6 +840,104 @@ document.getElementById('contact-form').addEventListener('submit',function(e){
     }catch{rmDots();add('Something went wrong. Try again!','bot')}
   }
   snd.onclick=send;inp.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+
+  /* dismiss notification badge once the chat is opened */
+  const badge=document.getElementById('chatBadge');
+  fab.addEventListener('click',()=>{if(badge)badge.classList.add('hidden')},{once:true});
+})();
+
+/* ── PAGE LOADER ── */
+window.addEventListener('load',()=>{
+  const loader=document.getElementById('pageLoader');
+  setTimeout(()=>loader && loader.classList.add('hidden'),350);
+});
+
+/* ── SCROLL PROGRESS BAR ── */
+(function(){
+  const bar=document.getElementById('scrollProgress');
+  function update(){
+    const h=document.documentElement;
+    const scrolled=h.scrollTop;
+    const height=h.scrollHeight-h.clientHeight;
+    bar.style.width=height>0?(scrolled/height*100)+'%':'0%';
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+})();
+
+/* ── CUSTOM CURSOR ── */
+(function(){
+  if(matchMedia('(hover:none)').matches)return;
+  const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+  let dx=0,dy=0,rx=0,ry=0,started=false;
+  window.addEventListener('mousemove',e=>{
+    dx=e.clientX;dy=e.clientY;
+    if(!started){started=true;document.body.classList.add('cursor-ready');rx=dx;ry=dy;}
+  });
+  (function loop(){
+    rx+=(dx-rx)*.18;ry+=(dy-ry)*.18;
+    dot.style.transform=`translate(${dx}px,${dy}px) translate(-50%,-50%)`;
+    ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a,button,.btn,.project-card,.cert-card,.tag,input,textarea').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('hovering'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hovering'));
+  });
+})();
+
+/* ── NAV INDICATOR PILL ── */
+(function(){
+  const wrap=document.getElementById('nav-links'),ind=document.getElementById('navIndicator');
+  function move(){
+    const active=wrap.querySelector('a.active');
+    if(!active||innerWidth<=700){ind.style.opacity=0;return;}
+    const wr=wrap.getBoundingClientRect(),ar=active.getBoundingClientRect();
+    ind.style.width=ar.width+'px';
+    ind.style.transform=`translateX(${ar.left-wr.left}px)`;
+    ind.style.opacity=1;
+  }
+  new MutationObserver(move).observe(wrap,{attributes:true,subtree:true,attributeFilter:['class']});
+  window.addEventListener('resize',move);
+  setTimeout(move,900);
+})();
+
+/* ── RIPPLE ON BUTTONS ── */
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('click',function(e){
+    const r=this.getBoundingClientRect();
+    const span=document.createElement('span');
+    const size=Math.max(r.width,r.height);
+    span.className='ripple';
+    span.style.width=span.style.height=size+'px';
+    span.style.left=(e.clientX-r.left-size/2)+'px';
+    span.style.top=(e.clientY-r.top-size/2)+'px';
+    this.appendChild(span);
+    setTimeout(()=>span.remove(),600);
+  });
+});
+
+/* ── ANIMATED STAT COUNTERS ── */
+(function(){
+  const stats=document.querySelectorAll('.stat-card .num');
+  if(!stats.length)return;
+  function animate(el){
+    const raw=el.textContent.trim();
+    const target=parseInt(raw.replace(/\D/g,''),10);
+    const suffix=raw.replace(/[0-9]/g,'');
+    if(isNaN(target)){return;}
+    let cur=0;const dur=1200,start=performance.now();
+    function step(now){
+      const p=Math.min((now-start)/dur,1);
+      cur=Math.floor(p*target);
+      el.textContent=cur+suffix;
+      if(p<1)requestAnimationFrame(step);else el.textContent=target+suffix;
+    }
+    requestAnimationFrame(step);
+  }
+  const io=new IntersectionObserver(ents=>{ents.forEach(e=>{if(e.isIntersecting){animate(e.target);io.unobserve(e.target)}})},{threshold:.6});
+  stats.forEach(s=>io.observe(s));
 })();
 </script>
 </body>
